@@ -1,1 +1,3 @@
+literature research 
 
+Steve Leonard, William Turner (2017): JavaScript for Sound Artists: Learn to Code with the Web Audio API
