@@ -46,22 +46,36 @@ var wavesurfer = WaveSurfer.create({
 
 });
 
+  // function touchStarted() {
+  //   wavesurfer.on('ready', function () {
+  //     wavesurfer.play();
+  //   });
+  //   if (wavesurfer.getAudioContext().state !== 'running') {
+  //     wavesurfer.getAudioContext().resume();
+  //   }
+  //
+  // }
+  //
+  function playButtonClicked(){
+    console.log("test");
+    wavesurfer.on('ready', function () {
+      wavesurfer.play();
+    });
+  }
+
  wavesurfer.load('./files/audiosamples/carbonara.mp3');
 
   function init() {
-    console.log("hey");
     editorModel = new audioEditor.editorModel();
     editorModel.test();
-    console.log("hey1");
     editorView = new audioEditor.editorView();
     editorView.test();
-    console.log("hey2");
     recordingView = new audioEditor.recordingView();
     editorView.test();
-    console.log("hey3");
     editorController = new audioEditor.editorController();
-    editorController.test();
-    console.log("hey4");
+    editorController.init();
+    editorController.setOnPlayPauseButtonListener(playButtonClicked);
+
   }
 
   function start() {

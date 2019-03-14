@@ -6,7 +6,6 @@ var that = {};
 function init(){}
 
   function test(){
-    console.log("editorview: yes.");
   }
 
   that.test=test;
