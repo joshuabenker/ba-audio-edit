@@ -5,9 +5,7 @@ audioEditor.editorController = function() {
     playButtonClicked;
 
   function onplaypauseClicked(){
-    console.log("klick");
     playButtonClicked();
-    console.log("klick2");
   }
 
   function setOnPlayPauseButtonListener(listener) {

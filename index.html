@@ -25,10 +25,9 @@
 
 <header class="site-header">
 
-  <ol class="breadcrumb">
-    <li><a href="/waveform-playlist/">Waveform Playlist</a></li>
-    <li class="active">Full Waveform Editor</li>
-  </ol>
+  <!--<ol class="breadcrumb">-->
+    <!--<li><a href="/waveform-playlist/">Waveform Playlist</a></li>-->
+  <!--</ol>-->
 
 </header>
 
@@ -38,13 +37,13 @@
   <div class="wrapper">
     <article class="post">
       <header class="post-header">
-        <h1 class="post-title">Audio Editor</h1>
+        <!--<h1 class="post-title">Audio Editor</h1>-->
       </header>
       <div class="post-content">
         <div id="top-bar" class="playlist-top-bar">
           <div class="playlist-toolbar">
             <div class="btn-group">
-      <span class="btn-pause btn btn-warning">
+      <span class="btn-pause btn btn-warning" id="playpausebutton">
         <i class="fa fa-pause"></i>
       </span>
       <span class="btn-play btn btn-success">
@@ -81,11 +80,11 @@
       <span class="btn-shift btn btn-default" title="shift audio in time">
         <i class="fa fa-arrows-h"></i>
       </span>
-      <span class="btn-fadein btn btn-default" title="set audio fade in">
-        <i class="fa fa-long-arrow-left"></i>
-      </span>
-      <span class="btn-fadeout btn btn-default" title="set audio fade out">
-        <i class="fa fa-long-arrow-right"></i>
+      <!--<span class="btn-fadein btn btn-default" title="set audio fade in">-->
+        <!--<i class="fa fa-long-arrow-left"></i>-->
+      <!--</span>-->
+      <!--<span class="btn-fadeout btn btn-default" title="set audio fade out">-->
+        <!--<i class="fa fa-long-arrow-right"></i>-->
       </span>
             </div>
             <!--<div class="btn-group btn-fade-state-group">-->
@@ -100,16 +99,18 @@
       </span>
       <span title="keep only the selected audio region for a track"
             class="btn-trim-audio btn btn-primary disabled">Trim</span>
-            </div>
-            <div class="btn-group">
-      <span title="Prints playlist info to console"
-            class="btn btn-info">Print</span>
               <span title="Clear the playlist's tracks" class="btn btn-clear btn-danger">Clear</span>
-            </div>
-            <div class="btn-group">
-      <span title="Download the current work as Wav file" class="btn btn-download btn-primary">
+               <span title="Download the current work as Wav file" class="btn btn-download btn-primary">
         <i class="fa fa-download"></i>
       </span>
+            </div>
+
+            <div class="btn-group">
+      <!--<span title="Prints playlist info to console"-->
+            <!--class="btn btn-info">Print</span>-->
+            </div>
+            <div class="btn-group">
+
             </div>
           </div>
         </div>
@@ -167,11 +168,13 @@
         <script type="text/javascript" src="waveform/dist/waveform-playlist/js/emitter.js"></script>
 
         <script src="ressources/js/audioEditor.js"></script>
-        <script src="ressources/js/controller/recordingController.js"></script>
         <script src="ressources/js/controller/editorController.js"></script>
         <script src="ressources/js/model/editorModel.js"></script>
         <script src="ressources/js/view/editorView.js"></script>
-        <script src="ressources/js/view/recordingView.js"></script>
+
+<script>
+  audioEditor.start();
+</script>
 
 
 </body>
