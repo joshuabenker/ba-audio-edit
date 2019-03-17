@@ -54,16 +54,16 @@ function cueFormatters(format) {
         return seconds.toFixed(3);
     },
     "hh:mm:ss": function (seconds) {
-        return clockFormat(seconds, 0);   
+        return clockFormat(seconds, 0);
     },
     "hh:mm:ss.u": function (seconds) {
-        return clockFormat(seconds, 1);   
+        return clockFormat(seconds, 1);
     },
     "hh:mm:ss.uu": function (seconds) {
-        return clockFormat(seconds, 2);   
+        return clockFormat(seconds, 2);
     },
     "hh:mm:ss.uuu": function (seconds) {
-        return clockFormat(seconds, 3);   
+        return clockFormat(seconds, 3);
     }
   };
 
@@ -251,6 +251,7 @@ $container.on("dragleave", ".track-drop", function(e) {
 
 $container.on("drop", ".track-drop", function(e) {
   e.preventDefault();
+  console.log("test");
   e.target.classList.remove("drag-enter");
 
   var dropEvent = e.originalEvent;
@@ -259,6 +260,21 @@ $container.on("drop", ".track-drop", function(e) {
     ee.emit("newtrack", dropEvent.dataTransfer.files[i]);
   }
 });
+
+// joshua change
+// files per click
+// $container.on("click", ".track-drop", function(e) {
+//   e.preventDefault();
+//   console.log("test2");
+//   e.target.classList.remove("drag-enter");
+//
+//   var dropEvent = e.originalEvent;
+//
+//   for (var i = 0; i < dropEvent.dataTransfer.files.length; i++) {
+//     ee.emit("newtrack", dropEvent.dataTransfer.files[i]);
+//   }
+// });
+
 
 $container.on("change", ".time-format", function(e) {
   format = $timeFormat.val();

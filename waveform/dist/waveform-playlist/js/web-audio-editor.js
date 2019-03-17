@@ -48,7 +48,19 @@ playlist = WaveformPlaylist.init({
 
 playlist.load([
   {
-    "src": "./media/audio/carbonara.mp3",
+    "src": "./media/audio/audio1.mp3",
+    "name": "Vocals",
+    "fadeIn": {
+      "duration": 0.5
+    },
+    "fadeOut": {
+      "duration": 0.5
+    },
+    "customClass": "vocals",
+    "waveOutlineColor": '#c0dce0'
+  },
+  {
+    "src": "./media/audio/audio2.mp3",
     "name": "Vocals",
     "fadeIn": {
       "duration": 0.5

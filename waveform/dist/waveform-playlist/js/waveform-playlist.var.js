@@ -1782,12 +1782,14 @@ var WaveformPlaylist =
 	      });
 
 	      ee.on('statechange', function (state) {
-	        _this2.setState(state);
+          _this2.setState(state);
 	        _this2.drawRequest();
 	      });
 
 	      ee.on('shift', function (deltaTime, track) {
-	        track.setStartTime(track.getStartTime() + deltaTime);
+          console.log("statechange");
+
+          track.setStartTime(track.getStartTime() + deltaTime);
 	        _this2.adjustDuration();
 	        _this2.drawRequest();
 	      });
@@ -1860,7 +1862,8 @@ var WaveformPlaylist =
 	      });
 
 	      ee.on('newtrack', function (file) {
-	        _this2.load([{
+          console.log("test1");
+          _this2.load([{
 	          src: file,
 	          name: file.name
 	        }]);
