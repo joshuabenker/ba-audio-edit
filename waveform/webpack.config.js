@@ -3,7 +3,7 @@ module.exports = {
   output: {
     path:  __dirname + "/dist/waveform-playlist/js",
     publicPath: "/waveform-playlist/js/",
-    filename: 'waveform-playlist.var.js',
+    filename: 'waveform-playlist.js',
     library: 'WaveformPlaylist',
     libraryTarget: 'var'
   },
