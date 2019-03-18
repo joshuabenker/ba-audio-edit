@@ -7,6 +7,20 @@
   padding-top: 20px;
 }
 
-#maingroup {
+.playlist-toolbar {
+  margin-top:10px;
+  /*float:left;*/
   position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.playlist {
+  z-index: 1;
+}
+
+#navtoggle {
+  float:right;
+  margin-right: 20px;
 }
