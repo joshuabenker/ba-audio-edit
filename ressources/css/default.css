@@ -10,7 +10,8 @@
 
 
 .playlist-toolbar {
-  margin-top:10px;
+  background: white;
+  padding:10px;
   /*margin-bottom: 100px;*/
   /*float:left;*/
   position: fixed;
