@@ -1836,6 +1836,28 @@ var WaveformPlaylist =
 	        _this2.drawRequest();
 	      });
 
+
+        //added
+        //deletetrack
+        //bug when two files are recorded
+        ee.on('deletetrack', function (track) {
+          var trackInfo = JSON.stringify(track.getTrackDetails());
+          var tracksInfo = JSON.stringify(playlist.getInfo());
+          console.log(trackInfo);
+          console.log(tracksInfo);
+
+          var newPlaylist = tracksInfo.replace(trackInfo, '').replace(',,', ',');
+          if ( newPlaylist.charAt(newPlaylist.length - 2) == ',' ) {
+            newPlaylist = newPlaylist.slice(0,-2) + ']';
+          }
+          if ( newPlaylist.charAt(1) == ',' ) {
+            newPlaylist = '[' + newPlaylist.slice(2, newPlaylist.length);
+          }
+          console.log(newPlaylist);
+          // ee.emit('clear');
+          // playlist.load(JSON.parse(newPlaylist));
+        });
+
 	      ee.on('volumechange', function (volume, track) {
 	        track.setGainLevel(volume / 100);
 	      });
@@ -5839,7 +5861,11 @@ var WaveformPlaylist =
 	        onclick: function onclick() {
 	          _this2.ee.emit('solo', _this2);
 	        }
-	      }, ['Solo'])]), (0, _h2.default)('label', [(0, _h2.default)('input.volume-slider', {
+	      }, ['Solo']),(0, _h2.default)('span.btn.btn-default.btn-xs.btn-deletetrack' + soloClass, {
+	        onclick: function onclick() {
+	          _this2.ee.emit('deletetrack', _this2);
+	        }
+	      }, ['Delete'])]), (0, _h2.default)('label', [(0, _h2.default)('input.volume-slider', {
 	        attributes: {
 	          type: 'range',
 	          min: 0,

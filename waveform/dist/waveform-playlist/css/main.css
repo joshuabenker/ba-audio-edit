@@ -168,7 +168,7 @@
   width: 50px;
   margin: 1em 0; }
   .track-drop::before {
-    content: "Drop audio file(s) here!"; }
+    content: "Drop audio"; }
   .track-drop.drag-enter {
     border: 2px solid orange; }
 
