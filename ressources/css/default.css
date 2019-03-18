@@ -7,8 +7,11 @@
   padding-top: 20px;
 }
 
+
+
 .playlist-toolbar {
   margin-top:10px;
+  /*margin-bottom: 100px;*/
   /*float:left;*/
   position: fixed;
   top: 0;
@@ -18,6 +21,7 @@
 
 .playlist {
   z-index: 1;
+  margin-top:30px;
 }
 
 #navtoggle {
