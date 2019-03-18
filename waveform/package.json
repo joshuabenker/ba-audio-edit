@@ -101,5 +101,8 @@
   "bugs": {
     "url": "https://github.com/naomiaro/waveform-playlist/issues"
   },
-  "homepage": "http://naomiaro.github.io/waveform-playlist"
+  "homepage": "http://naomiaro.github.io/waveform-playlist",
+  "dependencies": {
+    "webpack-dev-server": ">=3.1.11"
+  }
 }
