@@ -218,7 +218,7 @@ $container.on("click", ".btn-trim-audio", function() {
 });
 
 $container.on("click", ".btn-info", function() {
-  console.log(playlist.getInfo());
+  // console.log(playlist.getInfo());
 });
 
 $container.on("click", ".btn-download", function () {

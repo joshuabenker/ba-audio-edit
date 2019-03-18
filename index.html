@@ -1,22 +1,23 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:image" content="https://raw.githubusercontent.com/naomiaro/waveform-playlist/master/img/stemtracks.png">
-    <meta property="og:image:height" content="401">
-    <meta property="og:image:width" content="1039">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content="https://raw.githubusercontent.com/naomiaro/waveform-playlist/master/img/stemtracks.png">
+  <meta property="og:image:height" content="401">
+  <meta property="og:image:width" content="1039">
 
-    <title>Audio Editor</title>
-    <meta name="description" content="">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="waveform/dist/waveform-playlist/css/main.css">
-    <link rel="canonical" href="https://naomiaro.github.io/waveform-playlist/web-audio-editor.html">
-    <link rel="alternate" type="application/rss+xml" title="Waveform Playlist" href="https://naomiaro.github.io/waveform-playlist/feed.xml">
+  <title>Audio Editor</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="waveform/dist/waveform-playlist/css/main.css">
+  <link rel="canonical" href="https://naomiaro.github.io/waveform-playlist/web-audio-editor.html">
+  <link rel="alternate" type="application/rss+xml" title="Waveform Playlist" href="https://naomiaro.github.io/waveform-playlist/feed.xml">
+  <link rel="stylesheet" href="node_modules/sidebarjs/dist/sidebarjs.min.css">
+
 </head>
 
 
@@ -25,11 +26,10 @@
 <header class="site-header">
 
   <!--<ol class="breadcrumb">-->
-    <!--<li><a href="/waveform-playlist/">Waveform Playlist</a></li>-->
+  <!--<li><a href="/waveform-playlist/">Waveform Playlist</a></li>-->
   <!--</ol>-->
 
 </header>
-
 
 
 <div class="container">
@@ -41,19 +41,18 @@
       <div class="post-content">
         <div id="top-bar" class="playlist-top-bar">
           <div class="playlist-toolbar">
-            <div class="btn-group">
+            <div class="btn-group" id="maingroup">
+              <span class="btn-play btn btn-success">
+        <i class="fa fa-play"></i>
+      </span>
       <span class="btn-pause btn btn-warning" id="playpausebutton">
         <i class="fa fa-pause"></i>
       </span>
-      <span class="btn-play btn btn-success">
-        <i class="fa fa-play"></i>
-      </span>
+
       <span class="btn-stop btn btn-danger">
         <i class="fa fa-stop"></i>
       </span>
-              <span class="btn-record btn btn-danger disabled">
-        <i class="fa fa-microphone"></i>
-      </span>
+
       <span class="btn-rewind btn btn-success">
         <i class="fa fa-fast-backward"></i>
       </span>
@@ -61,15 +60,18 @@
         <i class="fa fa-fast-forward"></i>
       </span>
             </div>
-            <div class="btn-group">
+              <span sidebarjs-toggle="rightsidebar" class="btn-fast-forward btn btn-info">
+                <i class="fa fa-bars"></i>
+              </span>
+            <div sidebarjs="rightsidebar">
+              <nav>
       <span title="zoom in" class="btn-zoom-in btn btn-default">
         <i class="fa fa-search-plus"></i>
       </span>
       <span title="zoom out" class="btn-zoom-out btn btn-default">
         <i class="fa fa-search-minus"></i>
       </span>
-            </div>
-            <div class="btn-group btn-playlist-state-group">
+            <!--<div class="btn-group btn-playlist-state-group">-->
       <span class="btn-cursor btn btn-default active" title="select cursor">
         <i class="fa fa-headphones"></i>
       </span>
@@ -79,34 +81,44 @@
       <span class="btn-shift btn btn-default" title="shift audio in time">
         <i class="fa fa-arrows-h"></i>
       </span>
-      <!--<span class="btn-fadein btn btn-default" title="set audio fade in">-->
-        <!--<i class="fa fa-long-arrow-left"></i>-->
-      <!--</span>-->
-      <!--<span class="btn-fadeout btn btn-default" title="set audio fade out">-->
-        <!--<i class="fa fa-long-arrow-right"></i>-->
+                <!--<div class="btn-group btn-select-state-group">-->
+              <span class="btn-record btn btn-danger disabled">
+        <i class="fa fa-microphone"></i>
       </span>
-            </div>
-            <!--<div class="btn-group btn-fade-state-group">-->
-              <!--<span class="btn btn-default btn-logarithmic active">logarithmic</span>-->
-              <!--<span class="btn btn-default btn-linear">linear</span>-->
-              <!--<span class="btn btn-default btn-exponential">exponential</span>-->
-              <!--<span class="btn btn-default btn-scurve">s-curve</span>-->
-            <!--</div>-->
-            <div class="btn-group btn-select-state-group">
-      <span class="btn-loop btn btn-success disabled" title="loop a selected segment of audio">
+
+      <span title="keep only the selected audio region for a track"
+            class="btn-trim-audio btn btn-primary disabled"><i class="fa fa-cut"></i></span>
+              <span class="btn-loop btn btn-success disabled" title="loop a selected segment of audio">
         <i class="fa fa-repeat"></i>
       </span>
-      <span title="keep only the selected audio region for a track"
-            class="btn-trim-audio btn btn-primary disabled">Trim</span>
-              <span title="Clear the playlist's tracks" class="btn btn-clear btn-danger">Clear</span>
                <span title="Download the current work as Wav file" class="btn btn-download btn-primary">
         <i class="fa fa-download"></i>
       </span>
+              <span title="Clear the playlist's tracks" class="btn btn-clear btn-danger"><i
+                class="fa fa-trash"></i></span>
+
+                <!--</div>-->
+                </nav>
             </div>
 
+              <!--<span class="btn-fadein btn btn-default" title="set audio fade in">-->
+              <!--<i class="fa fa-long-arrow-left"></i>-->
+              <!--</span>-->
+              <!--<span class="btn-fadeout btn btn-default" title="set audio fade out">-->
+              <!--<i class="fa fa-long-arrow-right"></i>-->
+              <!--</span>-->
+
+            <!--<div class="btn-group btn-fade-state-group">-->
+            <!--<span class="btn btn-default btn-logarithmic active">logarithmic</span>-->
+            <!--<span class="btn btn-default btn-linear">linear</span>-->
+            <!--<span class="btn btn-default btn-exponential">exponential</span>-->
+            <!--<span class="btn btn-default btn-scurve">s-curve</span>-->
+            <!--</div>-->
+
+
             <div class="btn-group">
-      <!--<span title="Prints playlist info to console"-->
-            <!--class="btn btn-info">Print</span>-->
+              <!--<span title="Prints playlist info to console"-->
+              <!--class="btn btn-info">Print</span>-->
             </div>
             <div class="btn-group">
 
@@ -116,17 +128,17 @@
         <div id="playlist"></div>
         <div class="playlist-bottom-bar">
           <!--<form class="form-inline">-->
-            <!--<select class="time-format form-control">-->
-              <!--<option value="seconds">seconds</option>-->
-              <!--<option value="thousandths">thousandths</option>-->
-              <!--<option value="hh:mm:ss">hh:mm:ss</option>-->
-              <!--<option value="hh:mm:ss.u">hh:mm:ss + tenths</option>-->
-              <!--<option value="hh:mm:ss.uu">hh:mm:ss + hundredths</option>-->
-              <!--<option value="hh:mm:ss.uuu" selected="selected">hh:mm:ss + milliseconds</option>-->
-            <!--</select>-->
-            <!--<input type="text" class="audio-start input-small form-control">-->
-            <!--<input type="text" class="audio-end form-control">-->
-            <!--<label class="audio-pos">00:00:00.0</label>-->
+          <!--<select class="time-format form-control">-->
+          <!--<option value="seconds">seconds</option>-->
+          <!--<option value="thousandths">thousandths</option>-->
+          <!--<option value="hh:mm:ss">hh:mm:ss</option>-->
+          <!--<option value="hh:mm:ss.u">hh:mm:ss + tenths</option>-->
+          <!--<option value="hh:mm:ss.uu">hh:mm:ss + hundredths</option>-->
+          <!--<option value="hh:mm:ss.uuu" selected="selected">hh:mm:ss + milliseconds</option>-->
+          <!--</select>-->
+          <!--<input type="text" class="audio-start input-small form-control">-->
+          <!--<input type="text" class="audio-end form-control">-->
+          <!--<label class="audio-pos">00:00:00.0</label>-->
           <!--</form>-->
 
           <form class="form-inline">
@@ -141,11 +153,11 @@
             </div>
           </form>
           <!--<form class="form-inline">-->
-            <!--<div class="control-group">-->
-              <!--<label for="time">Seek to time :</label>-->
-              <!--<input type="number" class="form-control" value="14" id="seektime"/>-->
-              <!--<span class="btn btn-primary btn-seektotime">Seek !</span>-->
-            <!--</div>-->
+          <!--<div class="control-group">-->
+          <!--<label for="time">Seek to time :</label>-->
+          <!--<input type="number" class="form-control" value="14" id="seektime"/>-->
+          <!--<span class="btn btn-primary btn-seektotime">Seek !</span>-->
+          <!--</div>-->
           <!--</form>-->
           <!--<div class="sound-status"></div>-->
           <div class="track-drop"></div>
@@ -160,19 +172,24 @@
 <!--<footer class="well well-lg">-->
 <!--</footer>-->
 
-        <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script type="text/javascript" src="waveform/dist/waveform-playlist/js/waveform-playlist.js"></script>
-        <!--<script type="text/javascript" src="waveform/dist/waveform-playlist/js/record.js"></script>-->
-        <script type="text/javascript" src="waveform/dist/waveform-playlist/js/web-audio-editor.js"></script>
-        <script type="text/javascript" src="waveform/dist/waveform-playlist/js/emitter.js"></script>
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="waveform/dist/waveform-playlist/js/waveform-playlist.js"></script>
+<!--<script type="text/javascript" src="waveform/dist/waveform-playlist/js/record.js"></script>-->
+<script type="text/javascript" src="waveform/dist/waveform-playlist/js/web-audio-editor.js"></script>
+<script type="text/javascript" src="waveform/dist/waveform-playlist/js/emitter.js"></script>
 
-        <script src="ressources/js/audioEditor.js"></script>
-        <script src="ressources/js/controller/editorController.js"></script>
-        <script src="ressources/js/model/editorModel.js"></script>
-        <script src="ressources/js/view/editorView.js"></script>
+<script src="ressources/js/audioEditor.js"></script>
+<script src="ressources/js/controller/editorController.js"></script>
+<script src="ressources/js/model/editorModel.js"></script>
+<script src="ressources/js/view/editorView.js"></script>
+<script src="node_modules/sidebarjs/dist/sidebarjs.min.js"></script>
 
 <script>
   audioEditor.start();
+  var rightSidebarjs = new SidebarJS.SidebarElement({
+    component: document.querySelector('[sidebarjs="rightsidebar"]'),
+    position: 'right',
+  });
 </script>
 
 

@@ -24,7 +24,7 @@
   .playlist .selection.point {
     background: red; }
   .playlist .selection.segment {
-    background: rgba(0, 0, 0, 0.1); }
+    background: rgba(1, 0, 0, 0.1); }
   .playlist .channel-wrapper.silent .channel {
     opacity: 0.3; }
   .playlist .controls {
