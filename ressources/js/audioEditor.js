@@ -10,7 +10,6 @@ var audioEditor = function () {
 
 
   function playButtonClicked(){
-    console.log("hey hey hey");
   }
 
 
@@ -18,8 +17,7 @@ var audioEditor = function () {
     editorModel = new audioEditor.editorModel();
     editorModel.test();
     editorView = new audioEditor.editorView();
-    editorView.test();
-    editorView.test();
+    editorView.init();
     editorController = new audioEditor.editorController();
     editorController.init();
     editorController.setOnPlayPauseButtonListener(playButtonClicked);

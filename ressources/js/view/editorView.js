@@ -3,12 +3,17 @@ audioEditor.editorView = function() {
 "use strict";
 var that = {};
 
-function init(){}
+function init() {
+  drawSidebar();
 
-  function test(){
+}
+
+  function drawSidebar(){
+    var rightSidebarjs = new SidebarJS.SidebarElement({
+      component: document.querySelector('[sidebarjs="rightsidebar"]'),
+      position: 'right'
+    });
   }
-
-  that.test=test;
 
 that.init = init;
 return that;

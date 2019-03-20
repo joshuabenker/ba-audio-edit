@@ -33,7 +33,7 @@ var WaveformPlaylist =
 /******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+  /******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/waveform-playlist/js/";
 /******/
@@ -808,31 +808,31 @@ var WaveformPlaylist =
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var createElement = __webpack_require__(3)
+	var createElement = __webpack_require__(3);
 
-	module.exports = createElement
+	module.exports = createElement;
 
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var document = __webpack_require__(4)
+	var document = __webpack_require__(4);
 
-	var applyProperties = __webpack_require__(6)
+	var applyProperties = __webpack_require__(6);
 
-	var isVNode = __webpack_require__(9)
-	var isVText = __webpack_require__(11)
-	var isWidget = __webpack_require__(12)
-	var handleThunk = __webpack_require__(13)
+	var isVNode = __webpack_require__(9);
+	var isVText = __webpack_require__(11);
+	var isWidget = __webpack_require__(12);
+	var handleThunk = __webpack_require__(13);
 
-	module.exports = createElement
+	module.exports = createElement;
 
 	function createElement(vnode, opts) {
-	    var doc = opts ? opts.document || document : document
-	    var warn = opts ? opts.warn : null
+	    var doc = opts ? opts.document || document : document;
+	    var warn = opts ? opts.warn : null;
 
-	    vnode = handleThunk(vnode).a
+	    vnode = handleThunk(vnode).a;
 
 	    if (isWidget(vnode)) {
 	        return vnode.init()
@@ -847,15 +847,15 @@ var WaveformPlaylist =
 
 	    var node = (vnode.namespace === null) ?
 	        doc.createElement(vnode.tagName) :
-	        doc.createElementNS(vnode.namespace, vnode.tagName)
+	        doc.createElementNS(vnode.namespace, vnode.tagName);
 
-	    var props = vnode.properties
-	    applyProperties(node, props)
+	    var props = vnode.properties;
+	    applyProperties(node, props);
 
-	    var children = vnode.children
+	    var children = vnode.children;
 
 	    for (var i = 0; i < children.length; i++) {
-	        var childNode = createElement(children[i], opts)
+	        var childNode = createElement(children[i], opts);
 	        if (childNode) {
 	            node.appendChild(childNode)
 	        }
@@ -3297,8 +3297,7 @@ var WaveformPlaylist =
 	'use strict';
 
 	var isArray = __webpack_require__(34);
-
-	var VNode = __webpack_require__(35);
+    var VNode = __webpack_require__(35);
 	var VText = __webpack_require__(36);
 	var isVNode = __webpack_require__(9);
 	var isVText = __webpack_require__(11);
