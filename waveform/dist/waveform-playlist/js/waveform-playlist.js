@@ -2385,19 +2385,24 @@ var WaveformPlaylist =
 	  }, {
 	    key: 'record',
 	    value: function record() {
-	      var _this12 = this;
+        if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
+          this.mediaRecorder.stop();
+        }
+        else {
+          var _this12 = this;
 
-	      var playoutPromises = [];
-	      this.mediaRecorder.start(300);
+          var playoutPromises = [];
+          this.mediaRecorder.start(300);
 
-	      this.tracks.forEach(function (track) {
-	        track.setState('none');
-	        playoutPromises.push(track.schedulePlay(_this12.ac.currentTime, 0, undefined, {
-	          shouldPlay: _this12.shouldTrackPlay(track)
-	        }));
-	      });
+          this.tracks.forEach(function (track) {
+            track.setState('none');
+            playoutPromises.push(track.schedulePlay(_this12.ac.currentTime, 0, undefined, {
+              shouldPlay: _this12.shouldTrackPlay(track)
+            }));
+          });
 
-	      this.playoutPromises = playoutPromises;
+          this.playoutPromises = playoutPromises;
+        }
 	    }
 	  }, {
 	    key: 'startAnimation',
