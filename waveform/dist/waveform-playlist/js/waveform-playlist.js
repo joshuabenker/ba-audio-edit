@@ -5526,6 +5526,9 @@ var WaveformPlaylist =
 	      var trackStart = this.getStartTime();
 	      var trackEnd = this.getEndTime();
 	      var offset = this.cueIn - trackStart;
+        console.log(trackStart);
+        console.log(trackEnd);
+
 
 	      if (trackStart <= start && trackEnd >= start || trackStart <= end && trackEnd >= end) {
 	        var cueIn = start < trackStart ? trackStart : start;
