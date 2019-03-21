@@ -35,9 +35,21 @@
 
 </header>
 
+<div id="startscreen">
+  <div id="startfont">
+    <h2>hi, you!</h2>
+    <h3>record something ?</h3>
+  </div>
+<span class="btn btn-primary btn-fullscreen btn-lg" id="btn-fullscreen">
+  <i class="fa fa-microphone fa-lg"></i>
+  <!--<h3>Start</h3>-->
+              <!--<i class="fa fa-microphone " id="startbutton"></i>-->
+</span>
+</div>
+
 
 <!--<div class="container">-->
-  <div class="wrapper">
+  <div class="wrapper" id="mainscreen">
     <article class="post">
       <header class="post-header">
         <!--<h1 class="post-title">Audio Editor</h1>-->
@@ -45,7 +57,7 @@
       <div class="post-content">
         <div id="top-bar" class="playlist-top-bar">
           <div class="playlist-toolbar">
-            <span class="btn-play btn btn-success btn-lg firstsidebar-btn">
+            <span class="btn-play btn btn-success btn-lg firstsidebar-btn draggable">
               <i class="fa fa-play"></i>
             </span>
             <span class="btn-pause btn btn-warning btn-lg" id="playpausebutton">
@@ -63,6 +75,10 @@
             <span class="btn-record btn btn-danger btn-lg disabled">
               <i class="fa fa-microphone"></i>
             </span>
+            <span class="btn-fullscreen btn btn-primary btn-lg">
+              <i class="fa fa-arrows"></i>
+            </span>
+
             <span sidebarjs-toggle="rightsidebar" class="btn-fast-forward btn btn-info btn-lg" id="navtoggle">
                 <i class="fa fa-bars"></i>
               </span>
@@ -171,11 +187,20 @@
 <!--<footer class="well well-lg">-->
 <!--</footer>-->
 
-<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/tunajs@1.0.9/tuna.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pizzicato/0.6.4/Pizzicato.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/4.1.0/screenfull.min.js"></script>
 <script type="text/javascript" src="waveform/dist/waveform-playlist/js/waveform-playlist.js?v=2"></script>
 <!--<script type="text/javascript" src="waveform/dist/waveform-playlist/js/record.js"></script>-->
 <script type="text/javascript" src="waveform/dist/waveform-playlist/js/web-audio-editor.js?v=2"></script>
 <script type="text/javascript" src="waveform/dist/waveform-playlist/js/emitter.js?v=2"></script>
+
+
+
+
+
 
 <script src="ressources/js/audioEditor.js"></script>
 <script src="ressources/js/controller/editorController.js"></script>

@@ -43,7 +43,8 @@ var WaveformPlaylist =
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/
+  (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -1841,21 +1842,23 @@ var WaveformPlaylist =
         //deletetrack
         //bug when two files are recorded
         ee.on('deletetrack', function (track) {
-          var trackInfo = JSON.stringify(track.getTrackDetails());
-          var tracksInfo = JSON.stringify(playlist.getInfo());
-          console.log(trackInfo);
-          console.log(tracksInfo);
+          console.log(track.src);
 
-          var newPlaylist = tracksInfo.replace(trackInfo, '').replace(',,', ',');
-          if ( newPlaylist.charAt(newPlaylist.length - 2) == ',' ) {
-            newPlaylist = newPlaylist.slice(0,-2) + ']';
-          }
-          if ( newPlaylist.charAt(1) == ',' ) {
-            newPlaylist = '[' + newPlaylist.slice(2, newPlaylist.length);
-          }
-          console.log(newPlaylist);
-          ee.emit('clear');
-          playlist.load(JSON.parse(newPlaylist));
+          // var trackInfo = JSON.stringify(track.getTrackDetails());
+          // var tracksInfo = JSON.stringify(playlist.getInfo());
+          // console.log(trackInfo);
+          // console.log(tracksInfo);
+          //
+          // var newPlaylist = tracksInfo.replace(trackInfo, '').replace(',,', ',');
+          // if ( newPlaylist.charAt(newPlaylist.length - 2) == ',' ) {
+          //   newPlaylist = newPlaylist.slice(0,-2) + ']';
+          // }
+          // if ( newPlaylist.charAt(1) == ',' ) {
+          //   newPlaylist = '[' + newPlaylist.slice(2, newPlaylist.length);
+          // }
+          // console.log(newPlaylist);
+          // ee.emit('clear');
+          // playlist.load(JSON.parse(newPlaylist));
         });
 
 	      ee.on('volumechange', function (volume, track) {
@@ -7856,6 +7859,9 @@ var WaveformPlaylist =
 	          resolve();
 	        };
 	      });
+        
+
+        var inited = true;
 
 	      this.fadeGain = this.ac.createGain();
 	      // used for track volume slider

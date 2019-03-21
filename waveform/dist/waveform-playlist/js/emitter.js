@@ -230,6 +230,22 @@ $container.on("click", ".btn-seektotime", function () {
   ee.emit("select", time, time);
 });
 
+$container.on("click", ".btn-fullscreen", function () {
+    if (screenfull.enabled) {
+      if(screenfull.isFullscreen == false){
+      screenfull.request();
+
+        if(document.getElementById("mainscreen").style.visibility == "visible"){
+          screenfull.exit();}
+        else{
+        document.getElementById("startscreen").remove();
+        document.getElementById("mainscreen").style.visibility="visible";}
+      }
+      else{ screenfull.exit();}
+    }
+  
+});
+
 $container.on("change", ".select-seek-style", function (node) {
   playlist.setSeekStyle(node.target.value);
 });

@@ -7,7 +7,7 @@ audioEditor.editorModel = function() {
 
   function test() {
     var test= document.getElementsByClassName("automatic-scroll").checked;
-    console.log(test);
+    
   }
 
   that.test= test;
