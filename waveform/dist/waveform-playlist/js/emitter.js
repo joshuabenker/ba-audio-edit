@@ -28,6 +28,12 @@ function toggleActive(node) {
   node.classList.toggle('active');
 }
 
+function hideSidebar(){
+  console.log(document.getElementById("sidebarContainer"));
+  var element = document.getElementById("sidebarContainer");
+  element.classList.remove("sidebarjs--is-visible");
+}
+
 function cueFormatters(format) {
 
   function clockFormat(seconds, decimals) {
@@ -69,6 +75,9 @@ function cueFormatters(format) {
 
   return formats[format];
 }
+
+
+
 
 function updateSelect(start, end) {
   if (start < end) {
@@ -164,13 +173,16 @@ $container.on("click", ".btn-cursor", function() {
 });
 
 $container.on("click", ".btn-select", function() {
+  hideSidebar();
   ee.emit("statechange", "select");
   toggleActive(this);
 });
 
 $container.on("click", ".btn-shift", function() {
+  hideSidebar();
   ee.emit("statechange", "shift");
   toggleActive(this);
+
 });
 
 $container.on("click", ".btn-fadein", function() {
@@ -206,10 +218,12 @@ $container.on("click", ".btn-exponential", function() {
 
 //zoom buttons
 $container.on("click", ".btn-zoom-in", function() {
+  hideSidebar();
   ee.emit("zoomin");
 });
 
 $container.on("click", ".btn-zoom-out", function() {
+  hideSidebar();
   ee.emit("zoomout");
 });
 
@@ -232,18 +246,22 @@ $container.on("click", ".btn-seektotime", function () {
 
 $container.on("click", ".btn-fullscreen", function () {
     if (screenfull.enabled) {
-      if(screenfull.isFullscreen == false){
-      screenfull.request();
+      if (screenfull.isFullscreen == false) {
+        screenfull.request();
 
-        if(document.getElementById("mainscreen").style.visibility == "visible"){
-          screenfull.exit();}
-        else{
-        document.getElementById("startscreen").remove();
-        document.getElementById("mainscreen").style.visibility="visible";}
+        if (document.getElementById("mainscreen").style.visibility == "visible") {
+          screenfull.exit();
+        }
+        else {
+          document.getElementById("startscreen").remove();
+          document.getElementById("mainscreen").style.visibility = "visible";
+        }
       }
-      else{ screenfull.exit();}
+      else {
+        screenfull.exit();
+      }
     }
-  
+
 });
 
 $container.on("change", ".select-seek-style", function (node) {

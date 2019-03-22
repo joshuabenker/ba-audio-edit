@@ -7257,85 +7257,179 @@ var WaveformPlaylist =
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var _class = function () {
-	  function _class(track) {
-	    _classCallCheck(this, _class);
+    var _class = function () {
+      function _class(track) {
+        _classCallCheck(this, _class);
+        this.track = track;
+        console.log("track");
+        console.log(track);
+        this.active = false;
+      }
 
-	    this.track = track;
-	    this.active = false;
-	  }
+      _createClass(_class, [{
+        key: 'setup',
+        value: function setup(samplesPerPixel, sampleRate) {
+          this.samplesPerPixel = samplesPerPixel;
+          this.sampleRate = sampleRate;
+        }
+      }, {
+        key: 'emitShift',
+        value: function emitShift(x) {
+          console.log("emitShift");
+          console.log(x);
+          console.log(this.track);
+          var deltaX = x - this.prevX;
+          console.log("deltaX");
+          console.log(deltaX);
+          var deltaTime = (0, _conversions.pixelsToSeconds)(deltaX, this.samplesPerPixel, this.sampleRate);
+          this.prevX = x;
+          this.track.ee.emit('shift', deltaTime, this.track);
+        }
+      },
 
-	  _createClass(_class, [{
-	    key: 'setup',
-	    value: function setup(samplesPerPixel, sampleRate) {
-	      this.samplesPerPixel = samplesPerPixel;
-	      this.sampleRate = sampleRate;
-	    }
-	  }, {
-	    key: 'emitSelection',
-	    value: function emitSelection(x) {
-	      var minX = Math.min(x, this.startX);
-	      var maxX = Math.max(x, this.startX);
-	      var startTime = (0, _conversions.pixelsToSeconds)(minX, this.samplesPerPixel, this.sampleRate);
-	      var endTime = (0, _conversions.pixelsToSeconds)(maxX, this.samplesPerPixel, this.sampleRate);
 
-	      this.track.ee.emit('select', startTime, endTime, this.track);
-	    }
-	  }, {
-	    key: 'complete',
-	    value: function complete(x) {
-	      this.emitSelection(x);
-	      this.active = false;
-	    }
-	  }, {
-	    key: 'mousedown',
-	    value: function mousedown(e) {
-	      e.preventDefault();
-	      this.active = true;
+        {
+          key: 'touchstart',
+          value: function touchstart(e) {
+            console.log('touchstart', e)
+            e.preventDefault();
+            this.active = true;
+            //this.touch = e.changedTouches[0];
+            this.prevX = e.changedTouches[0].pageX;
+          }
 
-	      this.startX = e.offsetX;
-	      var startTime = (0, _conversions.pixelsToSeconds)(this.startX, this.samplesPerPixel, this.sampleRate);
+        },
+        {
+          key: 'touchmove',
+          value: function touchmove(e) {
+            console.log('touchmove', e)
+            e.preventDefault();
+            this.active = true;
+            var newTouch = e.changedTouches[0];
+            //var offsetX = newTouch.pageX - this.touch.pageX;
+            //console.log('x:', this.touch.pageX, newTouch.pageX);
+            this.emitShift(newTouch.pageX);
+            //this.touch = newTouch;
+          }
+        },
 
-	      this.track.ee.emit('select', startTime, startTime, this.track);
-	    }
-	  }, {
-	    key: 'mousemove',
-	    value: function mousemove(e) {
-	      if (this.active) {
-	        e.preventDefault();
-	        this.emitSelection(e.offsetX);
-	      }
-	    }
-	  }, {
-	    key: 'mouseup',
-	    value: function mouseup(e) {
-	      if (this.active) {
-	        e.preventDefault();
-	        this.complete(e.offsetX);
-	      }
-	    }
-	  }, {
-	    key: 'mouseleave',
-	    value: function mouseleave(e) {
-	      if (this.active) {
-	        e.preventDefault();
-	        this.complete(e.offsetX);
-	      }
-	    }
-	  }], [{
-	    key: 'getClass',
-	    value: function getClass() {
-	      return '.state-select';
-	    }
-	  }, {
-	    key: 'getEvents',
-	    value: function getEvents() {
-	      return ['mousedown', 'mousemove', 'mouseup', 'mouseleave'];
-	    }
-	  }]);
+        {
+          key: 'touchend',
+          value: function touchend(e) {
+            console.log('touchend', e)
+            e.preventDefault();
+            this.active = true;
+          }
+        },
 
-	  return _class;
-	}();
+
+
+        {
+          key: 'complete',
+          value: function complete(x) {
+            console.log("complete");
+            this.emitShift(x);
+            this.active = false;
+          }
+        }, {
+          key: 'mousedown',
+          value: function mousedown(e) {
+            console.log("mousedown");
+            console.log(e);
+            e.preventDefault();
+            this.active = true;
+            this.el = e.target;
+            this.prevX = e.offsetX;
+          }
+        }, {
+          key: 'mousemove',
+          value: function mousemove(e) {
+            // MB Change
+            console.log("var = mousemove "+this.active);
+            if (this.active) {
+              e.preventDefault();
+              this.emitShift(e.offsetX);
+            }
+          }
+        }, {
+          key: 'mouseup',
+          value: function mouseup(e) {
+            console.log("mouseup");
+            if (this.active) {
+              e.preventDefault();
+              this.complete(e.offsetX);
+            }
+          }
+        }, {
+          key: 'mouseleave',
+          value: function mouseleave(e) {
+            console.log("mouseleave");
+            if (this.active) {
+              e.preventDefault();
+              this.complete(e.offsetX);
+            }
+          }
+        },
+
+
+
+
+
+
+        //   {
+        //   key: 'touchstart',
+        //   value: function touchstart(e) {
+        //     console.log("touchstart");
+        //     console.log(e);
+        //      e.preventDefault();
+        //      this.active = true;
+        //      this.el = e.target;
+        //     this.prevX = e.offsetX;
+        //   }
+        // }, {
+        //   key: 'touchmove',
+        //   value: function touchmove(e) {
+        //     console.log("var = touchmove "+this.active);
+        //     if (this.active) {
+        //         e.preventDefault();
+        //         this.emitShift(e.offsetX);
+        //     }
+        //   }
+        // },{
+        //   key: 'touchend',
+        //   value: function touchend(e) {
+        //     console.log("touchend");
+        //     if (this.active) {
+        //      e.preventDefault();
+        //      this.complete(e.offsetX);
+        //     }
+        //   }
+        // },
+
+        {
+          key: 'touchcancel',
+          value: function touchcancel(e) {
+            if (this.active) {
+              console.log("touchcancel");
+              e.preventDefault();
+              this.complete(e.offsetX);
+            }
+          }
+        }], [{
+        key: 'getClass',
+        value: function getClass() {
+          return '.state-shift';
+        }
+      }, {
+        key: 'getEvents',
+        value: function getEvents() {
+          return ['mousedown', 'mousemove', 'mouseup', 'mouseleave', 'touchstart','touchmove','touchend','touchcancel'];
+        }
+      }]);
+
+      return _class;
+    }();
+
 
 	exports.default = _class;
 
@@ -7355,81 +7449,178 @@ var WaveformPlaylist =
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var _class = function () {
-	  function _class(track) {
-	    _classCallCheck(this, _class);
+    var _class = function () {
+      function _class(track) {
+        _classCallCheck(this, _class);
+        this.track = track;
+        console.log("track");
+        console.log(track);
+        this.active = false;
+      }
 
-	    this.track = track;
-	    this.active = false;
-	  }
+      _createClass(_class, [{
+        key: 'setup',
+        value: function setup(samplesPerPixel, sampleRate) {
+          this.samplesPerPixel = samplesPerPixel;
+          this.sampleRate = sampleRate;
+        }
+      }, {
+        key: 'emitShift',
+        value: function emitShift(x) {
+          console.log("emitShift");
+          console.log(x);
+          console.log(this.track);
+          var deltaX = x - this.prevX;
+          console.log("deltaX");
+          console.log(deltaX);
+          var deltaTime = (0, _conversions.pixelsToSeconds)(deltaX, this.samplesPerPixel, this.sampleRate);
+          this.prevX = x;
+          this.track.ee.emit('shift', deltaTime, this.track);
+        }
+      },
 
-	  _createClass(_class, [{
-	    key: 'setup',
-	    value: function setup(samplesPerPixel, sampleRate) {
-	      this.samplesPerPixel = samplesPerPixel;
-	      this.sampleRate = sampleRate;
-	    }
-	  }, {
-	    key: 'emitShift',
-	    value: function emitShift(x) {
-	      var deltaX = x - this.prevX;
-	      var deltaTime = (0, _conversions.pixelsToSeconds)(deltaX, this.samplesPerPixel, this.sampleRate);
-	      this.prevX = x;
-	      this.track.ee.emit('shift', deltaTime, this.track);
-	    }
-	  }, {
-	    key: 'complete',
-	    value: function complete(x) {
-	      this.emitShift(x);
-	      this.active = false;
-	    }
-	  }, {
-	    key: 'mousedown',
-	    value: function mousedown(e) {
-	      e.preventDefault();
 
-	      this.active = true;
-	      this.el = e.target;
-	      this.prevX = e.offsetX;
-	    }
-	  }, {
-	    key: 'mousemove',
-	    value: function mousemove(e) {
-	      if (this.active) {
-	        e.preventDefault();
-	        this.emitShift(e.offsetX);
-	      }
-	    }
-	  }, {
-	    key: 'mouseup',
-	    value: function mouseup(e) {
-	      if (this.active) {
-	        e.preventDefault();
-	        this.complete(e.offsetX);
-	      }
-	    }
-	  }, {
-	    key: 'mouseleave',
-	    value: function mouseleave(e) {
-	      if (this.active) {
-	        e.preventDefault();
-	        this.complete(e.offsetX);
-	      }
-	    }
-	  }], [{
-	    key: 'getClass',
-	    value: function getClass() {
-	      return '.state-shift';
-	    }
-	  }, {
-	    key: 'getEvents',
-	    value: function getEvents() {
-	      return ['mousedown', 'mousemove', 'mouseup', 'mouseleave'];
-	    }
-	  }]);
+        {
+          key: 'touchstart',
+          value: function touchstart(e) {
+            console.log('touchstart', e)
+            e.preventDefault();
+            this.active = true;
+            //this.touch = e.changedTouches[0];
+            this.prevX = e.changedTouches[0].pageX;
+          }
 
-	  return _class;
-	}();
+        },
+        {
+          key: 'touchmove',
+          value: function touchmove(e) {
+            console.log('touchmove', e)
+            e.preventDefault();
+            this.active = true;
+            var newTouch = e.changedTouches[0];
+            //var offsetX = newTouch.pageX - this.touch.pageX;
+            //console.log('x:', this.touch.pageX, newTouch.pageX);
+            this.emitShift(newTouch.pageX);
+            //this.touch = newTouch;
+          }
+        },
+
+        {
+          key: 'touchend',
+          value: function touchend(e) {
+            console.log('touchend', e)
+            e.preventDefault();
+            this.active = true;
+          }
+        },
+
+
+
+        {
+          key: 'complete',
+          value: function complete(x) {
+            console.log("complete");
+            this.emitShift(x);
+            this.active = false;
+          }
+        }, {
+          key: 'mousedown',
+          value: function mousedown(e) {
+            console.log("mousedown");
+            console.log(e);
+            e.preventDefault();
+            this.active = true;
+            this.el = e.target;
+            this.prevX = e.offsetX;
+          }
+        }, {
+          key: 'mousemove',
+          value: function mousemove(e) {
+            // MB Change
+            console.log("var = mousemove "+this.active);
+            if (this.active) {
+              e.preventDefault();
+              this.emitShift(e.offsetX);
+            }
+          }
+        }, {
+          key: 'mouseup',
+          value: function mouseup(e) {
+            console.log("mouseup");
+            if (this.active) {
+              e.preventDefault();
+              this.complete(e.offsetX);
+            }
+          }
+        }, {
+          key: 'mouseleave',
+          value: function mouseleave(e) {
+            console.log("mouseleave");
+            if (this.active) {
+              e.preventDefault();
+              this.complete(e.offsetX);
+            }
+          }
+        },
+
+
+
+
+
+
+        //   {
+        //   key: 'touchstart',
+        //   value: function touchstart(e) {
+        //     console.log("touchstart");
+        //     console.log(e);
+        //      e.preventDefault();
+        //      this.active = true;
+        //      this.el = e.target;
+        //     this.prevX = e.offsetX;
+        //   }
+        // }, {
+        //   key: 'touchmove',
+        //   value: function touchmove(e) {
+        //     console.log("var = touchmove "+this.active);
+        //     if (this.active) {
+        //         e.preventDefault();
+        //         this.emitShift(e.offsetX);
+        //     }
+        //   }
+        // },{
+        //   key: 'touchend',
+        //   value: function touchend(e) {
+        //     console.log("touchend");
+        //     if (this.active) {
+        //      e.preventDefault();
+        //      this.complete(e.offsetX);
+        //     }
+        //   }
+        // },
+
+        {
+          key: 'touchcancel',
+          value: function touchcancel(e) {
+            if (this.active) {
+              console.log("touchcancel");
+              e.preventDefault();
+              this.complete(e.offsetX);
+            }
+          }
+        }], [{
+        key: 'getClass',
+        value: function getClass() {
+          return '.state-shift';
+        }
+      }, {
+        key: 'getEvents',
+        value: function getEvents() {
+          return ['mousedown', 'mousemove', 'mouseup', 'mouseleave', 'touchstart','touchmove','touchend','touchcancel'];
+        }
+      }]);
+
+      return _class;
+    }();
 
 	exports.default = _class;
 
@@ -7859,7 +8050,20 @@ var WaveformPlaylist =
 	          resolve();
 	        };
 	      });
-        
+        // var tuna = new Tuna(this.ac);
+        // //create a new Tuna delay instance
+        // var filter = new tuna.Filter({
+        //   frequency: 440, //20 to 22050
+        //   Q: 1, //0.001 to 100
+        //   gain: 0, //-40 to 40 (in decibels)
+        //   filterType: "lowpass", //lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass
+        //   bypass: 0
+        // });
+        // //connect the source to the Tuna delay
+        // this.source.connect(filter);
+        // //connect delay as a standard web audio node to the audio context destination
+        // filter.connect(this.destination);
+        // //start playing!
 
         var inited = true;
 
