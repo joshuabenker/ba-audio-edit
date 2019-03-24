@@ -18,6 +18,43 @@ export default class {
     this.track.ee.emit('shift', deltaTime, this.track);
   }
 
+
+  touchstart(e) {
+    console.log('touchstart', e)
+    e.preventDefault();
+    this.active = true;
+    this.prevX = e.changedTouches[0].pageX;
+  }
+
+
+  touchmove(e) {
+    console.log('touchmove', e)
+    e.preventDefault();
+    this.active = true;
+    var newTouch = e.changedTouches[0];
+    this.emitShift(newTouch.pageX);
+  }
+
+
+  touchend(e) {
+    console.log('touchend', e)
+    e.preventDefault();
+    this.active = true;
+  }
+
+
+  touchcancel(e) {
+    if (this.active) {
+      console.log("touchcancel");
+      e.preventDefault();
+      this.complete(e.changedTouches[0].pageX);
+    }
+  }
+
+
+
+
+
   complete(x) {
     this.emitShift(x);
     this.active = false;
@@ -57,6 +94,6 @@ export default class {
   }
 
   static getEvents() {
-    return ['mousedown', 'mousemove', 'mouseup', 'mouseleave'];
+    return ['mousedown', 'mousemove', 'mouseup', 'mouseleave','touchstart','touchmove','touchend','touchcancel'];
   }
 }

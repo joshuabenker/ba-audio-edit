@@ -25,6 +25,43 @@ export default class {
     this.active = false;
   }
 
+
+  /*ToDo
+   touchstart(e) {
+   console.log('touchstart', e)
+   e.preventDefault();
+   this.active = true;
+   this.prevX = e.changedTouches[0].pageX;
+   }
+
+
+   touchmove(e) {
+   console.log('touchmove', e)
+   e.preventDefault();
+   this.active = true;
+   var newTouch = e.changedTouches[0];
+   this.emitShift(newTouch.pageX);
+   }
+
+
+   touchend(e) {
+   console.log('touchend', e)
+   e.preventDefault();
+   this.active = true;
+   }
+
+
+   touchcancel(e) {
+   if (this.active) {
+   console.log("touchcancel");
+   e.preventDefault();
+   this.complete(e.offsetX);
+   }
+   }
+   */
+
+
+
   mousedown(e) {
     e.preventDefault();
     this.active = true;
@@ -61,6 +98,7 @@ export default class {
   }
 
   static getEvents() {
+    //ToDo return ['mousedown', 'mousemove', 'mouseup', 'mouseleave','touchstart','touchmove','touchend','touchcancel'];
     return ['mousedown', 'mousemove', 'mouseup', 'mouseleave'];
   }
 }

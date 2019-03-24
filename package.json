@@ -1,5 +1,5 @@
 {
-  "name": "ba-audio-rec-edit",
+  "name": "Web-based mobile multi-track Audio Recorder and Editor",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -19,5 +19,8 @@
   "dependencies": {
     "log-to-file": "^1.3.0",
     "sidebarjs": "^5.4.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.29.6"
   }
 }

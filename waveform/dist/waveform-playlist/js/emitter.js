@@ -28,6 +28,13 @@ function toggleActive(node) {
   node.classList.toggle('active');
 }
 
+$('#startmodal').modal({
+  show: true
+});
+
+
+
+
 function hideSidebar(){
   console.log(document.getElementById("sidebarContainer"));
   var element = document.getElementById("sidebarContainer");
@@ -185,6 +192,17 @@ $container.on("click", ".btn-shift", function() {
 
 });
 
+function selectFile(e) {
+  var files = e.target.files;
+  for (var i = 0, f; f = files[i]; i++) {
+    ee.emit("newtrack", f);
+  }
+}
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById('newFile')
+    .addEventListener('change', selectFile, false);
+});
+
 $container.on("click", ".btn-fadein", function() {
   ee.emit("statechange", "fadein");
   toggleActive(this);
@@ -248,12 +266,18 @@ $container.on("click", ".btn-fullscreen", function () {
     if (screenfull.enabled) {
       if (screenfull.isFullscreen == false) {
         screenfull.request();
-
         if (document.getElementById("mainscreen").style.visibility == "visible") {
           screenfull.exit();
         }
         else {
-          document.getElementById("startscreen").remove();
+          // document.getElementById("startscreen").remove();
+          $('#startmodal').modal('hide');
+          if (screen.orientation.type != "landscape-primary") {
+            $('#screenorientation_modal').modal('show')
+          }
+          else{
+            $('#screenorientation_modal').modal('hide')
+          };
           document.getElementById("mainscreen").style.visibility = "visible";
         }
       }
@@ -261,8 +285,19 @@ $container.on("click", ".btn-fullscreen", function () {
         screenfull.exit();
       }
     }
-
 });
+
+
+window.addEventListener("orientationchange", function() {
+  // Announce the new orientation number
+  if (screen.orientation.type != "landscape-primary") {
+    console.log("false");
+    $('#screenorientation_modal').modal('show')
+  }
+  else{
+    $('#screenorientation_modal').modal('hide')
+  }
+}, false);
 
 $container.on("change", ".select-seek-style", function (node) {
   playlist.setSeekStyle(node.target.value);
@@ -360,6 +395,10 @@ function displayDownloadLink(link) {
 /*
 * Code below receives updates from the playlist.
 */
+
+
+
+
 ee.on("select", updateSelect);
 
 ee.on("timeupdate", updateTime);
@@ -431,3 +470,5 @@ ee.on('finished', function () {
     });
   }
 });
+
+

@@ -34,18 +34,56 @@
   <!--</ol>-->
 
 </header>
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>-->
 
-<div id="startscreen">
-  <div id="startfont">
-    <h2>hi, you!</h2>
-    <h3>record something ?</h3>
+
+<div id="startmodal" class="modal bd-example-modal-xl" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="startfont">
+        <h2>hi, you!</h2>
+        <h3>this is a mobile web multitrack recorder and editor. </h3>
+          </br>
+        <h3>want to record or edit something ?</h3>
+          <h3>just push this little button down here!</h3>
+          </div>
+         <span class="btn btn-primary btn-fullscreen btn-lg" id="btn-fullscreen">
+          <i class="fa fa-microphone fa-lg"></i> </span>
+      </div>
+    </div>
   </div>
-<span class="btn btn-primary btn-fullscreen btn-lg" id="btn-fullscreen">
-  <i class="fa fa-microphone fa-lg"></i>
-  <!--<h3>Start</h3>-->
-              <!--<i class="fa fa-microphone " id="startbutton"></i>-->
-</span>
 </div>
+
+<div id="screenorientation_modal" class="modal bd-example-modal-xl" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body" id="screenorientation_modal_content">
+        <div class="startfont">
+        <h2>oh, hello again!</h2>
+        <h3>  </h3>
+        <h3>for the full experience, please turn your phone to widescreen mode. </h3>
+          </br>
+          <h3>you won't regret it. i promise!</h3>
+          </br>
+
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--<div id="startscreen">-->
+  <!--<div id="startfont">-->
+    <!--<h2>hi, you!</h2>-->
+    <!--<h3>record something ?</h3>-->
+    <!--<span class="btn btn-primary btn-fullscreen btn-lg" id="btn-fullscreen"></span>-->
+  <!--</div>-->
+<!--</div>-->
+
+  <!--<h3>Start</h3>-->
 
 
 <!--<div class="container">-->
@@ -57,6 +95,7 @@
       <div class="post-content">
         <div id="top-bar" class="playlist-top-bar">
           <div class="playlist-toolbar">
+
             <span class="btn-play btn btn-success btn-lg firstsidebar-btn draggable">
               <i class="fa fa-play"></i>
             </span>
@@ -161,11 +200,11 @@
               <label for="master-gain">Master Volume</label>
               <input type="range" min="0" max="100" value="100" class="master-gain form-control" id="master-gain">
             </div>
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" class="automatic-scroll"> Automatic Scroll
-              </label>
-            </div>
+            <!--<div class="checkbox">-->
+              <!--<label>-->
+                <!--<input type="checkbox" class="automatic-scroll"> Automatic Scroll-->
+              <!--</label>-->
+            <!--</div>-->
           </form>
           <!--<form class="form-inline">-->
           <!--<div class="control-group">-->
@@ -175,7 +214,12 @@
           <!--</div>-->
           <!--</form>-->
           <!--<div class="sound-status"></div>-->
-          <div class="track-drop"></div>
+          <!--<div class="track-drop"></div>-->
+          <span class="btn btn-primary btn-lg">
+            <i class="fa fa-upload"></i>
+            <input type="file" id="newFile" accept="audio/*" name="files[]" multiple />
+          </span>​
+
           <!--<div class="loading-data"></div>-->
         </div>
 
@@ -189,7 +233,8 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="https://unpkg.com/tunajs@1.0.9/tuna.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pizzicato/0.6.4/Pizzicato.min.js"></script>
+<script type="text/javascript" src="ressources/bootstrap/js/bootstrap.min.js"></script>
+<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pizzicato/0.6.4/Pizzicato.min.js"></script>-->
 <script type="text/javascript" src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/4.1.0/screenfull.min.js"></script>
 <script type="text/javascript" src="waveform/dist/waveform-playlist/js/waveform-playlist.js?v=2"></script>
@@ -206,10 +251,11 @@
 <script src="ressources/js/controller/editorController.js"></script>
 <script src="ressources/js/model/editorModel.js"></script>
 <script src="ressources/js/view/editorView.js"></script>
-<script src="node_modules/sidebarjs/dist/sidebarjs.min.js"></script>
+<!--<script src="node_modules/sidebarjs/dist/sidebarjs.min.js"></script>-->
 
 <script>
   audioEditor.start();
+
 
 </script>
 
