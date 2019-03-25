@@ -36,7 +36,7 @@ export default class {
     this.masterGain = 1;
     this.annotations = [];
     this.durationFormat = 'hh:mm:ss.uuu';
-    this.isAutomaticScroll = true;
+    this.isAutomaticScroll = false;
     this.resetDrawTimer = undefined;
   }
 
@@ -184,29 +184,6 @@ export default class {
         this.ee.emit('timeupdate', start);
         this.drawRequest();
       }
-    });
-
-    //added
-    //deletetrack
-    //bug when two files are recorded
-    ee.on('deletetrack', function (track) {
-      console.log("deletetrack");
-
-      // var trackInfo = JSON.stringify(track.getTrackDetails());
-      // var tracksInfo = JSON.stringify(playlist.getInfo());
-      // console.log(trackInfo);
-      // console.log(tracksInfo);
-      //
-      // var newPlaylist = tracksInfo.replace(trackInfo, '').replace(',,', ',');
-      // if ( newPlaylist.charAt(newPlaylist.length - 2) == ',' ) {
-      //   newPlaylist = newPlaylist.slice(0,-2) + ']';
-      // }
-      // if ( newPlaylist.charAt(1) == ',' ) {
-      //   newPlaylist = '[' + newPlaylist.slice(2, newPlaylist.length);
-      // }
-      // console.log(newPlaylist);
-      // ee.emit('clear');
-      // playlist.load(JSON.parse(newPlaylist));
     });
 
     ee.on('startaudiorendering', (type) => {

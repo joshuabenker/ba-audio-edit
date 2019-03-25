@@ -31,7 +31,7 @@ if (navigator.mediaDevices) {
 
 playlist = WaveformPlaylist.init({
   samplesPerPixel: 5000,
-  zoomLevels: [1000, 5000, 9000],
+  zoomLevels: [500,1000, 2000,5000, 9000],
   waveHeight: 100,
   container: document.getElementById("playlist"),
   state: 'cursor',

@@ -1,6 +1,5 @@
 export function automaticscroll(val) {
   this.isAutomaticScroll = val;
-  console.log(isAutomaticScroll);
 }
 
 export function durationformat(format) {

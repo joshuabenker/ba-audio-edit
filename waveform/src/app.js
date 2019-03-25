@@ -42,7 +42,7 @@ export function init(options = {}, ee = EventEmitter()) {
       linkEndpoints: false,
       isContinuousPlay: false,
     },
-    isAutomaticScroll: true,
+    isAutomaticScroll: false,
   };
 
   const config = _assign(defaults, options);

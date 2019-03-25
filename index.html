@@ -111,14 +111,18 @@
             <span class="btn-fast-forward btn btn-success btn-lg">
               <i class="fa fa-fast-forward"></i>
             </span>
+            <label class="btn btn-lg btn-primary">
+              <i class="fa fa-upload"></i>  <input type="file" id="newFile" multiple style="display: none;">
+            </label>
             <span class="btn-record btn btn-danger btn-lg disabled">
               <i class="fa fa-microphone"></i>
             </span>
+
             <span class="btn-fullscreen btn btn-primary btn-lg">
               <i class="fa fa-arrows"></i>
             </span>
 
-            <span sidebarjs-toggle="rightsidebar" class="btn-fast-forward btn btn-info btn-lg" id="navtoggle">
+            <span sidebarjs-toggle="rightsidebar" class=" btn btn-info btn-lg" id="navtoggle">
                 <i class="fa fa-bars"></i>
               </span>
           </div>
@@ -215,10 +219,7 @@
           <!--</form>-->
           <!--<div class="sound-status"></div>-->
           <!--<div class="track-drop"></div>-->
-          <span class="btn btn-primary btn-lg">
-            <i class="fa fa-upload"></i>
-            <input type="file" id="newFile" accept="audio/*" name="files[]" multiple />
-          </span>​
+
 
           <!--<div class="loading-data"></div>-->
         </div>
@@ -251,7 +252,7 @@
 <script src="ressources/js/controller/editorController.js"></script>
 <script src="ressources/js/model/editorModel.js"></script>
 <script src="ressources/js/view/editorView.js"></script>
-<!--<script src="node_modules/sidebarjs/dist/sidebarjs.min.js"></script>-->
+<script src="node_modules/sidebarjs/dist/sidebarjs.min.js"></script>
 
 <script>
   audioEditor.start();

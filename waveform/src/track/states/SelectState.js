@@ -26,7 +26,7 @@ export default class {
   }
 
 
-  /*ToDo
+  //ToDo
    touchstart(e) {
    console.log('touchstart', e)
    e.preventDefault();
@@ -58,7 +58,7 @@ export default class {
    this.complete(e.offsetX);
    }
    }
-   */
+
 
 
 

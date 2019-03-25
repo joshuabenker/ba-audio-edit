@@ -277,7 +277,7 @@ $container.on("click", ".btn-fullscreen", function () {
           }
           else{
             $('#screenorientation_modal').modal('hide')
-          };
+          }
           document.getElementById("mainscreen").style.visibility = "visible";
         }
       }
@@ -291,7 +291,6 @@ $container.on("click", ".btn-fullscreen", function () {
 window.addEventListener("orientationchange", function() {
   // Announce the new orientation number
   if (screen.orientation.type != "landscape-primary") {
-    console.log("false");
     $('#screenorientation_modal').modal('show')
   }
   else{
