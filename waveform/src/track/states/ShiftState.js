@@ -20,7 +20,6 @@ export default class {
 
 
   touchstart(e) {
-    console.log('touchstart', e)
     e.preventDefault();
     this.active = true;
     this.prevX = e.changedTouches[0].pageX;
@@ -28,7 +27,6 @@ export default class {
 
 
   touchmove(e) {
-    console.log('touchmove', e)
     e.preventDefault();
     this.active = true;
     var newTouch = e.changedTouches[0];
@@ -37,7 +35,6 @@ export default class {
 
 
   touchend(e) {
-    console.log('touchend', e)
     e.preventDefault();
     this.active = true;
   }
@@ -45,7 +42,6 @@ export default class {
 
   touchcancel(e) {
     if (this.active) {
-      console.log("touchcancel");
       e.preventDefault();
       this.complete(e.changedTouches[0].pageX);
     }

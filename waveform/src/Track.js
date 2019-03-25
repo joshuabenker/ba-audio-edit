@@ -213,6 +213,11 @@ export default class {
     this.playout.setShouldPlay(bool);
   }
 
+  setFX(fx) {
+    this.fx = fx;
+    this.playout.setFX(fx);
+  }
+
   setGainLevel(level) {
     this.gain = level;
     this.playout.setVolumeGainLevel(level);
@@ -372,7 +377,29 @@ export default class {
               this.ee.emit('solo', this);
             },
           }, ['Solo']),
+          h(`span.btn.btn-default.btn-xs.btn-delete`, {
+            onclick: () => {
+              this.ee.emit('delete', this);
+            },
+          }, ['Delete']),
+          //MB Change
+          // h(`span.btn.btn-default.btn-xs.btn-effect`, {
+          //   onclick: () => {
+          //     this.ee.emit('fxchange', true, this);
+          //   },
+          // }, ['Effect']),
+          // h('select', { value: 'Filter'}, [
+          //   h('option', {value: 'Delay'}, 'Delay'),
+          //   h('option', {value: 'Filter'}, 'Filter')
+          //   ],
+          //   {
+          //     onchange: () => {
+          //       this.ee.emit('fxchange', true, this);
+          //     }
+          //   }
+          // )
         ]),
+
         h('label', [
           h('input.volume-slider', {
             attributes: {
@@ -389,6 +416,15 @@ export default class {
         ]),
       ],
     );
+  }
+
+  createSelect() {
+    let items = [];
+    let fx = ['Chorus','Delay','Reverb','Filter'];
+    for (let i = 0; i <= fx; i++) {
+      items.push(`<option value=${fx[i]}>${fx[i]}</option>`);
+    }
+    return `<select>${items}</select>`;
   }
 
   render(data) {

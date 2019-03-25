@@ -81,6 +81,11 @@ export function volumechange(volume, track) {
   track.setGainLevel(volume / 100);
 }
 
+// MB Change
+// export function fxchange(fx, track) {
+//   track.setFX(fx);
+// }
+
 export function mastervolumechange(volume) {
   this.masterGain = volume / 100;
   this.tracks.forEach((track) => {

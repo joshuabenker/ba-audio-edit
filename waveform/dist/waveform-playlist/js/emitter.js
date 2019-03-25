@@ -32,6 +32,9 @@ $('#startmodal').modal({
   show: true
 });
 
+$container.on("change", ".automatic-scroll", function(e){
+  ee.emit("automaticscroll", $(e.target).is(':checked'));
+});
 
 
 
@@ -83,16 +86,16 @@ function cueFormatters(format) {
   return formats[format];
 }
 
-
-
-
 function updateSelect(start, end) {
   if (start < end) {
+    //MB Change
     $('.btn-trim-audio').removeClass('disabled');
+    $('.btn-trim-audio').show();
     $('.btn-loop').removeClass('disabled');
   }
   else {
     $('.btn-trim-audio').addClass('disabled');
+    $('.btn-trim-audio').hide();
     $('.btn-loop').addClass('disabled');
   }
 
@@ -195,6 +198,7 @@ $container.on("click", ".btn-shift", function() {
 function selectFile(e) {
   var files = e.target.files;
   for (var i = 0, f; f = files[i]; i++) {
+
     ee.emit("newtrack", f);
   }
 }
@@ -277,7 +281,7 @@ $container.on("click", ".btn-fullscreen", function () {
           }
           else{
             $('#screenorientation_modal').modal('hide')
-          }
+          };
           document.getElementById("mainscreen").style.visibility = "visible";
         }
       }
@@ -291,6 +295,7 @@ $container.on("click", ".btn-fullscreen", function () {
 window.addEventListener("orientationchange", function() {
   // Announce the new orientation number
   if (screen.orientation.type != "landscape-primary") {
+    console.log("false");
     $('#screenorientation_modal').modal('show')
   }
   else{
@@ -319,15 +324,17 @@ $container.on("dragleave", ".track-drop", function(e) {
 
 $container.on("drop", ".track-drop", function(e) {
   e.preventDefault();
-  console.log("test");
   e.target.classList.remove("drag-enter");
-
   var dropEvent = e.originalEvent;
-
   for (var i = 0; i < dropEvent.dataTransfer.files.length; i++) {
     ee.emit("newtrack", dropEvent.dataTransfer.files[i]);
   }
 });
+
+
+
+
+
 
 // joshua change
 // files per click
@@ -364,9 +371,8 @@ $container.on("change", ".link-endpoints", function(e){
   ee.emit("linkendpoints", $(e.target).is(':checked'));
 });
 
-$container.on("change", ".automatic-scroll", function(e){
-  ee.emit("automaticscroll", $(e.target).is(':checked'));
-});
+
+
 
 function displaySoundStatus(status) {
   $(".sound-status").html(status);
@@ -471,3 +477,81 @@ ee.on('finished', function () {
 });
 
 
+
+
+/*
+    This is a demo of the Tuna delay node. See the source at https://github.com/Theodeus/tuna
+*/
+
+// var inited = false;
+// var delay;
+// function init() {
+//   //create an instance of Tuna by passing the AudioContext we use
+//   var tuna = new Tuna(audioContext);
+//   //create a new Tuna delay instance
+//   delay = new tuna.Delay({
+//     delayTime: 800 //a short delayTime to create a slap-back delay
+//   });
+//   //connect the source to the Tuna delay
+//   source.connect(delay);
+//   //connect delay as a standard web audio node to the audio context destination
+//   delay.connect(audioContext.destination);
+//   //start playing!
+//   source.start(audioContext.currentTime);
+//
+//   inited = true;
+// }
+
+/*
+    This is just the boilerplate needed to load an audio file and provide the dry/wet button functionality
+*/
+
+// var AC = "AudioContext" in window ? AudioContext : "webkitAudioContext" in window ? webkitAudioContext : document.write("Web Audio not supported");
+// var audioContext = new AC();
+// var source = audioContext.createBufferSource();
+// var format = checkAudioFormat();
+// var xhr = new XMLHttpRequest();
+//
+// xhr.open("GET", "https://oskareriksson.se/shed/assets/gitarrkompet." + format);
+// xhr.responseType = "arraybuffer";
+// xhr.onload = function(e) {
+//   audioContext.decodeAudioData(e.target.response, function(b) {
+//     source.buffer = b;
+//   })
+// }
+//
+// xhr.send(null);
+
+/*
+    Check file format to use
+*/
+
+// function checkAudioFormat () {
+//   var elem = document.createElement('audio');
+//   if (elem.canPlayType) {
+//     if (elem.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/, '')) {
+//       return "ogg";
+//     }
+//     if (elem.canPlayType('audio/mpeg; codecs="mp3"').replace(/^no$/, '')) {
+//       return "mp3";
+//     }
+//   }
+//   return false;
+// }
+
+/*
+    Setup dry/wet buttons
+*/
+
+// var dry = document.getElementById("dry");
+// var wet = document.getElementById("wet");
+//
+// dry.addEventListener("click", function(e) {
+//   if (!inited) init();
+//   delay.bypass = true;
+// });
+//
+// wet.addEventListener("click", function(e) {
+//   if (!inited) init();
+//   delay.bypass = false;
+// });

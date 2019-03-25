@@ -50,7 +50,7 @@ playlist = WaveformPlaylist.init({
 playlist.load([
   {
     "src": "./media/audio/audio1.mp3",
-    "name": "Vocals",
+    "name": "Synth1",
     "fadeIn": {
       "duration": 0.5
     },
@@ -62,7 +62,7 @@ playlist.load([
   },
   {
     "src": "./media/audio/audio2.mp3",
-    "name": "Vocals",
+    "name": "Synth2",
     "fadeIn": {
       "duration": 0.5
     },

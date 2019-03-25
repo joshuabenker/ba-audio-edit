@@ -25,44 +25,48 @@ export default class {
     this.active = false;
   }
 
-
-  //ToDo
-   touchstart(e) {
-   console.log('touchstart', e)
-   e.preventDefault();
-   this.active = true;
-   this.prevX = e.changedTouches[0].pageX;
-   }
-
-
-   touchmove(e) {
-   console.log('touchmove', e)
-   e.preventDefault();
-   this.active = true;
-   var newTouch = e.changedTouches[0];
-   this.emitShift(newTouch.pageX);
-   }
+  //bei den Touchevents wird nicht der relative Wert wie bei Klick übergeben, sondern der absolute, deshalb muss die Breite des Insprektors von 200 abgezogen werden.
+  touchstart(e) {
+    // console.log('e.changedTouches', e.changedTouches[0].pageX)
+    // console.log(e)
+    e.preventDefault();
+    this.active = true;
+    this.startX = e.changedTouches[0].pageX-200;
+    const startTime = pixelsToSeconds(this.startX, this.samplesPerPixel, this.sampleRate);
+    this.track.ee.emit('select', startTime, startTime, this.track);
+  }
 
 
-   touchend(e) {
-   console.log('touchend', e)
-   e.preventDefault();
-   this.active = true;
-   }
+  touchmove(e) {
+    //console.log('touchmove', e)
+    if (this.active) {
+      e.preventDefault();
+      this.emitSelection(e.changedTouches[0].pageX-200);
+    }
+  }
+
+  touchend(e) {
+    //console.log('touchend', e)
+    if (this.active) {
+      e.preventDefault();
+      this.complete(e.changedTouches[0].pageX-200);
+    }
+
+  }
 
 
-   touchcancel(e) {
-   if (this.active) {
-   console.log("touchcancel");
-   e.preventDefault();
-   this.complete(e.offsetX);
-   }
-   }
-
-
+  touchcancel(e) {
+    //console.log('touchcancel', e)
+    if (this.active) {
+      e.preventDefault();
+      this.complete(e.changedTouches[0].pageX-200);
+    }
+  }
 
 
   mousedown(e) {
+    // console.log('e.offsetX', e.offsetX)
+    // console.log('mousedown', e)
     e.preventDefault();
     this.active = true;
 
@@ -73,6 +77,7 @@ export default class {
   }
 
   mousemove(e) {
+    //console.log('mousemove', e)
     if (this.active) {
       e.preventDefault();
       this.emitSelection(e.offsetX);
@@ -80,6 +85,7 @@ export default class {
   }
 
   mouseup(e) {
+    //console.log('mouseup', e)
     if (this.active) {
       e.preventDefault();
       this.complete(e.offsetX);
@@ -87,6 +93,7 @@ export default class {
   }
 
   mouseleave(e) {
+    //console.log('mouseleave', e)
     if (this.active) {
       e.preventDefault();
       this.complete(e.offsetX);
@@ -98,7 +105,7 @@ export default class {
   }
 
   static getEvents() {
-    //ToDo return ['mousedown', 'mousemove', 'mouseup', 'mouseleave','touchstart','touchmove','touchend','touchcancel'];
-    return ['mousedown', 'mousemove', 'mouseup', 'mouseleave'];
+    return ['mousedown', 'mousemove', 'mouseup', 'mouseleave','touchstart','touchmove','touchend','touchcancel'];
+    //return ['mousedown', 'mousemove', 'mouseup', 'mouseleave'];
   }
 }

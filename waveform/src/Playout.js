@@ -77,7 +77,25 @@ export default class {
     this.shouldPlayGain.connect(this.masterGain);
     this.masterGain.connect(this.destination);
 
+    //MB Change
+    // console.log("fx");
+    // console.log(this.fx);
+    //
+    // if(this.fx){
+    //   var tuna = new Tuna(this.ac);
+    //   const delay = new tuna.Delay({
+    //     delayTime: 950 //a short delayTime to create a slap-back delay
+    //   });
+    //   this.source.connect(delay);
+    //   delay.connect(this.destination);
+    // }
+
     return sourcePromise;
+  }
+
+  setFX(fx) {
+    console.log("fx",fx);
+    this.fx = fx;
   }
 
   setVolumeGainLevel(level) {

@@ -1867,6 +1867,18 @@ var WaveformPlaylist =
 	        _this2.drawRequest();
 	      });
 	
+	      //MB Change
+	      ee.on('delete', function (track) {
+	        _this2.deleteTrack(track);
+	        _this2.adjustTrackPlayout();
+	        _this2.drawRequest();
+	      });
+	
+	      // MB Change
+	      // ee.on('fxchange', (fx, track) => {
+	      //   track.setFX(fx);
+	      // });
+	
 	      ee.on('volumechange', function (volume, track) {
 	        track.setGainLevel(volume / 100);
 	      });
@@ -1903,11 +1915,14 @@ var WaveformPlaylist =
 	        var track = _this2.getActiveTrack();
 	        var timeSelection = _this2.getTimeSelection();
 	
-	        track.trim(timeSelection.start, timeSelection.end);
-	        track.calculatePeaks(_this2.samplesPerPixel, _this2.sampleRate);
+	        //MB Change
+	        if (timeSelection.start != timeSelection.end) {
+	          track.trim(timeSelection.start, timeSelection.end);
+	          track.calculatePeaks(_this2.samplesPerPixel, _this2.sampleRate);
 	
-	        _this2.setTimeSelection(0, 0);
-	        _this2.drawRequest();
+	          _this2.setTimeSelection(0, 0);
+	          _this2.drawRequest();
+	        }
 	      });
 	
 	      ee.on('zoomin', function () {
@@ -1962,6 +1977,8 @@ var WaveformPlaylist =
 	          var cueIn = info.cuein || 0;
 	          var cueOut = info.cueout || audioBuffer.duration;
 	          var gain = info.gain || 1;
+	          //MB Change
+	          // const fx = 0;
 	          var muted = info.muted || false;
 	          var soloed = info.soloed || false;
 	          var selection = info.selected;
@@ -2004,6 +2021,8 @@ var WaveformPlaylist =
 	          track.setPlayout(playout);
 	
 	          track.setGainLevel(gain);
+	          //MB Change
+	          // track.setFX(fx);
 	
 	          if (muted) {
 	            _this3.muteTrack(track);
@@ -2171,6 +2190,31 @@ var WaveformPlaylist =
 	      this.tracks.forEach(function (track) {
 	        track.calculatePeaks(zoom, _this5.sampleRate);
 	      });
+	    }
+	
+	    //MB Change
+	
+	  }, {
+	    key: 'deleteTrack',
+	    value: function deleteTrack(track) {
+	
+	      var index = this.tracks.indexOf(track);
+	      this.tracks = this.tracks.filter(function (track, i) {
+	        if (i === index) {
+	          track.scheduleStop();
+	        }
+	        return i !== index;
+	      });
+	
+	      this.soloedTracks = this.soloedTracks.filter(function (track, i) {
+	        return i !== index;
+	      });
+	      this.mutedTracks = this.mutedTracks.filter(function (track, i) {
+	        return i !== index;
+	      });
+	
+	      this.adjustDuration();
+	      this.draw(this.render());
 	    }
 	  }, {
 	    key: 'muteTrack',
@@ -5700,6 +5744,12 @@ var WaveformPlaylist =
 	      this.playout.setShouldPlay(bool);
 	    }
 	  }, {
+	    key: 'setFX',
+	    value: function setFX(fx) {
+	      this.fx = fx;
+	      this.playout.setFX(fx);
+	    }
+	  }, {
 	    key: 'setGainLevel',
 	    value: function setGainLevel(level) {
 	      this.gain = level;
@@ -5714,7 +5764,7 @@ var WaveformPlaylist =
 	    /*
 	      startTime, endTime in seconds (float).
 	      segment is for a highlighted section in the UI.
-	       returns a Promise that will resolve when the AudioBufferSource
+	        returns a Promise that will resolve when the AudioBufferSource
 	      is either stopped or plays out naturally.
 	    */
 	
@@ -5869,7 +5919,28 @@ var WaveformPlaylist =
 	        onclick: function onclick() {
 	          _this2.ee.emit('solo', _this2);
 	        }
-	      }, ['Solo'])]), (0, _h2.default)('label', [(0, _h2.default)('input.volume-slider', {
+	      }, ['Solo']), (0, _h2.default)('span.btn.btn-default.btn-xs.btn-delete', {
+	        onclick: function onclick() {
+	          _this2.ee.emit('delete', _this2);
+	        }
+	      }, ['Delete'])]
+	      //MB Change
+	      // h(`span.btn.btn-default.btn-xs.btn-effect`, {
+	      //   onclick: () => {
+	      //     this.ee.emit('fxchange', true, this);
+	      //   },
+	      // }, ['Effect']),
+	      // h('select', { value: 'Filter'}, [
+	      //   h('option', {value: 'Delay'}, 'Delay'),
+	      //   h('option', {value: 'Filter'}, 'Filter')
+	      //   ],
+	      //   {
+	      //     onchange: () => {
+	      //       this.ee.emit('fxchange', true, this);
+	      //     }
+	      //   }
+	      // )
+	      ), (0, _h2.default)('label', [(0, _h2.default)('input.volume-slider', {
 	        attributes: {
 	          type: 'range',
 	          min: 0,
@@ -5881,6 +5952,16 @@ var WaveformPlaylist =
 	          _this2.ee.emit('volumechange', e.target.value, _this2);
 	        }
 	      })])]);
+	    }
+	  }, {
+	    key: 'createSelect',
+	    value: function createSelect() {
+	      var items = [];
+	      var fx = ['Chorus', 'Delay', 'Reverb', 'Filter'];
+	      for (var i = 0; i <= fx; i++) {
+	        items.push('<option value=' + fx[i] + '>' + fx[i] + '</option>');
+	      }
+	      return '<select>' + items + '</select>';
 	    }
 	  }, {
 	    key: 'render',
@@ -7279,44 +7360,51 @@ var WaveformPlaylist =
 	      this.active = false;
 	    }
 	
-	    //ToDo
+	    //bei den Touchevents wird nicht der relative Wert wie bei Klick übergeben, sondern der absolute, deshalb muss die Breite des Insprektors von 200 abgezogen werden.
 	
 	  }, {
 	    key: 'touchstart',
 	    value: function touchstart(e) {
-	      console.log('touchstart', e);
+	      // console.log('e.changedTouches', e.changedTouches[0].pageX)
+	      // console.log(e)
 	      e.preventDefault();
 	      this.active = true;
-	      this.prevX = e.changedTouches[0].pageX;
+	      this.startX = e.changedTouches[0].pageX - 200;
+	      var startTime = (0, _conversions.pixelsToSeconds)(this.startX, this.samplesPerPixel, this.sampleRate);
+	      this.track.ee.emit('select', startTime, startTime, this.track);
 	    }
 	  }, {
 	    key: 'touchmove',
 	    value: function touchmove(e) {
-	      console.log('touchmove', e);
-	      e.preventDefault();
-	      this.active = true;
-	      var newTouch = e.changedTouches[0];
-	      this.emitShift(newTouch.pageX);
+	      //console.log('touchmove', e)
+	      if (this.active) {
+	        e.preventDefault();
+	        this.emitSelection(e.changedTouches[0].pageX - 200);
+	      }
 	    }
 	  }, {
 	    key: 'touchend',
 	    value: function touchend(e) {
-	      console.log('touchend', e);
-	      e.preventDefault();
-	      this.active = true;
+	      //console.log('touchend', e)
+	      if (this.active) {
+	        e.preventDefault();
+	        this.complete(e.changedTouches[0].pageX - 200);
+	      }
 	    }
 	  }, {
 	    key: 'touchcancel',
 	    value: function touchcancel(e) {
+	      //console.log('touchcancel', e)
 	      if (this.active) {
-	        console.log("touchcancel");
 	        e.preventDefault();
-	        this.complete(e.offsetX);
+	        this.complete(e.changedTouches[0].pageX - 200);
 	      }
 	    }
 	  }, {
 	    key: 'mousedown',
 	    value: function mousedown(e) {
+	      // console.log('e.offsetX', e.offsetX)
+	      // console.log('mousedown', e)
 	      e.preventDefault();
 	      this.active = true;
 	
@@ -7328,6 +7416,7 @@ var WaveformPlaylist =
 	  }, {
 	    key: 'mousemove',
 	    value: function mousemove(e) {
+	      //console.log('mousemove', e)
 	      if (this.active) {
 	        e.preventDefault();
 	        this.emitSelection(e.offsetX);
@@ -7336,6 +7425,7 @@ var WaveformPlaylist =
 	  }, {
 	    key: 'mouseup',
 	    value: function mouseup(e) {
+	      //console.log('mouseup', e)
 	      if (this.active) {
 	        e.preventDefault();
 	        this.complete(e.offsetX);
@@ -7344,6 +7434,7 @@ var WaveformPlaylist =
 	  }, {
 	    key: 'mouseleave',
 	    value: function mouseleave(e) {
+	      //console.log('mouseleave', e)
 	      if (this.active) {
 	        e.preventDefault();
 	        this.complete(e.offsetX);
@@ -7357,8 +7448,8 @@ var WaveformPlaylist =
 	  }, {
 	    key: 'getEvents',
 	    value: function getEvents() {
-	      //ToDo return ['mousedown', 'mousemove', 'mouseup', 'mouseleave','touchstart','touchmove','touchend','touchcancel'];
-	      return ['mousedown', 'mousemove', 'mouseup', 'mouseleave'];
+	      return ['mousedown', 'mousemove', 'mouseup', 'mouseleave', 'touchstart', 'touchmove', 'touchend', 'touchcancel'];
+	      //return ['mousedown', 'mousemove', 'mouseup', 'mouseleave'];
 	    }
 	  }]);
 
@@ -7408,7 +7499,6 @@ var WaveformPlaylist =
 	  }, {
 	    key: 'touchstart',
 	    value: function touchstart(e) {
-	      console.log('touchstart', e);
 	      e.preventDefault();
 	      this.active = true;
 	      this.prevX = e.changedTouches[0].pageX;
@@ -7416,7 +7506,6 @@ var WaveformPlaylist =
 	  }, {
 	    key: 'touchmove',
 	    value: function touchmove(e) {
-	      console.log('touchmove', e);
 	      e.preventDefault();
 	      this.active = true;
 	      var newTouch = e.changedTouches[0];
@@ -7425,7 +7514,6 @@ var WaveformPlaylist =
 	  }, {
 	    key: 'touchend',
 	    value: function touchend(e) {
-	      console.log('touchend', e);
 	      e.preventDefault();
 	      this.active = true;
 	    }
@@ -7433,7 +7521,6 @@ var WaveformPlaylist =
 	    key: 'touchcancel',
 	    value: function touchcancel(e) {
 	      if (this.active) {
-	        console.log("touchcancel");
 	        e.preventDefault();
 	        this.complete(e.changedTouches[0].pageX);
 	      }
@@ -7934,7 +8021,26 @@ var WaveformPlaylist =
 	      this.shouldPlayGain.connect(this.masterGain);
 	      this.masterGain.connect(this.destination);
 	
+	      //MB Change
+	      // console.log("fx");
+	      // console.log(this.fx);
+	      //
+	      // if(this.fx){
+	      //   var tuna = new Tuna(this.ac);
+	      //   const delay = new tuna.Delay({
+	      //     delayTime: 950 //a short delayTime to create a slap-back delay
+	      //   });
+	      //   this.source.connect(delay);
+	      //   delay.connect(this.destination);
+	      // }
+	
 	      return sourcePromise;
+	    }
+	  }, {
+	    key: 'setFX',
+	    value: function setFX(fx) {
+	      console.log("fx", fx);
+	      this.fx = fx;
 	    }
 	  }, {
 	    key: 'setVolumeGainLevel',

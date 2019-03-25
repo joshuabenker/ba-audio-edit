@@ -243,6 +243,18 @@ export default class {
       this.drawRequest();
     });
 
+    //MB Change
+    ee.on('delete', (track) => {
+      this.deleteTrack(track);
+      this.adjustTrackPlayout();
+      this.drawRequest();
+    });
+
+    // MB Change
+    // ee.on('fxchange', (fx, track) => {
+    //   track.setFX(fx);
+    // });
+
     ee.on('volumechange', (volume, track) => {
       track.setGainLevel(volume / 100);
     });
@@ -279,11 +291,14 @@ export default class {
       const track = this.getActiveTrack();
       const timeSelection = this.getTimeSelection();
 
-      track.trim(timeSelection.start, timeSelection.end);
-      track.calculatePeaks(this.samplesPerPixel, this.sampleRate);
+      //MB Change
+      if(timeSelection.start != timeSelection.end){
+        track.trim(timeSelection.start, timeSelection.end);
+        track.calculatePeaks(this.samplesPerPixel, this.sampleRate);
 
-      this.setTimeSelection(0, 0);
-      this.drawRequest();
+        this.setTimeSelection(0, 0);
+        this.drawRequest();
+      }
     });
 
     ee.on('zoomin', () => {
@@ -335,6 +350,8 @@ export default class {
         const cueIn = info.cuein || 0;
         const cueOut = info.cueout || audioBuffer.duration;
         const gain = info.gain || 1;
+        //MB Change
+        // const fx = 0;
         const muted = info.muted || false;
         const soloed = info.soloed || false;
         const selection = info.selected;
@@ -377,6 +394,8 @@ export default class {
         track.setPlayout(playout);
 
         track.setGainLevel(gain);
+        //MB Change
+        // track.setFX(fx);
 
         if (muted) {
           this.muteTrack(track);
@@ -525,6 +544,24 @@ export default class {
     this.tracks.forEach((track) => {
       track.calculatePeaks(zoom, this.sampleRate);
     });
+  }
+
+  //MB Change
+  deleteTrack(track) {
+
+    const index = this.tracks.indexOf(track);
+    this.tracks = this.tracks.filter((track, i) => {
+      if(i === index){
+        track.scheduleStop();
+      }
+      return i !== index
+    });
+
+    this.soloedTracks = this.soloedTracks.filter((track, i) => i !== index)
+    this.mutedTracks = this.mutedTracks.filter((track, i) => i !== index)
+
+    this.adjustDuration();
+    this.draw(this.render());
   }
 
   muteTrack(track) {
