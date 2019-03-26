@@ -169,7 +169,7 @@
               <!--<div class="btn-group btn-playlist-state-group">-->
 
                 <span class="btn-select btn btn-default btn-lg btn-sidebar" title="select audio region">
-                  <i class="fa fa-italic"></i><i id="selectpointer" class="fas fa-mouse-pointer"></i>
+                  <i class="fa fa-italic"></i><i class=" selectpointerfas fa-mouse-pointer"></i>
 
                 </span>
                 <span class="btn-shift btn btn-default btn-lg btn-sidebar" title="shift audio in time">
@@ -214,6 +214,36 @@
         </div>
         <div id="playlist"></div>
         <div id="message"></div>
+        <div id="buttonCollapse">
+        <button class="btn btn-primary"  type="button" data-toggle="collapse" data-target="#helpCollapse" aria-expanded="false" aria-controls="collapseExample">
+        help
+        </button>
+        </div>
+        </p>
+        <div class="collapse" id="helpCollapse">
+          <div class="card card-body">
+            <span class=" btn btn-default" title="select audio region">
+                  <i class="fa fa-italic"></i><i class="fas fa-mouse-pointer selectpointer"></i>
+              </span>
+          select a section of an audio file </br>
+          <span class=" btn btn-default" title="shift audio in time">
+                  <i class="fa fa-arrows-h"></i>
+                </span>
+          shift an audio file to a different position </br>
+             <span class="btn btn-primary">
+              <i class="fa fa-arrows"></i>
+            </span>
+            go fullscreen / end fullscreen </br>
+            <label class="btn btn-primary">
+              <i class="fa fa-upload"></i>  <input type="file"  multiple style="display: none;">
+            </label>
+            upload an audio file from your device </br>
+            <span title="Download the current work as Wav file" class="btn  btn-primary">
+                  <i class="fa fa-download"></i>
+                </span>
+            download the track to your device
+          </div>
+          </div>
 
           <form class="form-inline">
             <!--<div class="form-group">-->

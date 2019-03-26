@@ -201,7 +201,20 @@ body {
   transform: rotate(45deg);
 }
 
-#selectpointer {
+#buttonCollapse {
+  text-align: center;
+}
+
+.card-body > * {
+  margin:2px;
+}
+
+#helpCollapse{
+  text-align: center;
+  color: white;
+}
+
+.selectpointer {
   margin-left:1px;
   font-size:13px;
 }
