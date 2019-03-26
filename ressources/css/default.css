@@ -197,6 +197,15 @@ body {
   background: lightsalmon;
 }
 
+.fa-arrows {
+  transform: rotate(45deg);
+}
+
+#selectpointer {
+  margin-left:1px;
+  font-size:13px;
+}
+
 #message{
   margin: 10px;
   color: white;
