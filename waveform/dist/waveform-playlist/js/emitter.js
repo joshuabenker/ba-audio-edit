@@ -173,6 +173,7 @@ $container.on("click", ".btn-clear", function() {
 });
 
 $container.on("click", ".btn-record", function() {
+  
   ee.emit("record");
 });
 

@@ -202,7 +202,12 @@ export default class {
     });
 
     ee.on('record', () => {
-      this.record();
+      if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
+        this.stop();
+      }
+      else {
+        this.record();
+      }
     });
 
     ee.on('play', (start, end) => {
@@ -754,6 +759,7 @@ export default class {
   }
 
   record() {
+
     const playoutPromises = [];
     this.mediaRecorder.start(300);
 

@@ -1826,7 +1826,11 @@ var WaveformPlaylist =
 	      });
 	
 	      ee.on('record', function () {
-	        _this2.record();
+	        if (_this2.mediaRecorder && _this2.mediaRecorder.state === 'recording') {
+	          _this2.stop();
+	        } else {
+	          _this2.record();
+	        }
 	      });
 	
 	      ee.on('play', function (start, end) {
