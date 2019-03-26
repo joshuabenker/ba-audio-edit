@@ -202,12 +202,12 @@ export default class {
     });
 
     ee.on('record', () => {
-      if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
-        this.stop();
-      }
-      else {
+      // if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
+      //   this.stop();
+      // }
+      // else {
         this.record();
-      }
+      // }
     });
 
     ee.on('play', (start, end) => {
