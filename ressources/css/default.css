@@ -210,9 +210,12 @@ body {
 }
 
 #helpCollapse{
-  text-align: center;
+  margin-left: 20px;
+
+  /*text-align: center;*/
   color: white;
 }
+
 
 .selectpointer {
   margin-left:1px;
