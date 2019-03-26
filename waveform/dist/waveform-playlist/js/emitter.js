@@ -17,6 +17,14 @@ var downloadUrl = undefined;
 var isLooping = false;
 var playoutPromises;
 
+var activeMode = "cursor"; // possible select, shift
+var messages = {
+  'help': 'hi, welcome! you can now edit some audio! yeah! upload or record new files over the buttons on the topbar. on the sidebar you can find some sweet tools. enjoy!',
+  'cursor': 'use this tool to set the cursor to a certain position.',
+  'shift': 'use this tool to drag a track to another position. push the select button in the top bar to go back to your normal tool.',
+  'select': 'use this tool to select a section of a track and trim it. push the select button in the top bar to go back to your normal tool.'
+};
+
 function toggleActive(node) {
   var active = node.parentNode.querySelectorAll('.active');
   var i = 0, len = active.length;
@@ -39,7 +47,6 @@ $container.on("change", ".automatic-scroll", function(e){
 
 
 function hideSidebar(){
-  console.log(document.getElementById("sidebarContainer"));
   var element = document.getElementById("sidebarContainer");
   element.classList.remove("sidebarjs--is-visible");
 }
@@ -88,9 +95,8 @@ function cueFormatters(format) {
 
 function updateSelect(start, end) {
   if (start < end) {
-    //MB Change
     $('.btn-trim-audio').removeClass('disabled');
-    $('.btn-trim-audio').show();
+    $('.btn-trim-audio').css('display', 'inline-block');
     $('.btn-loop').removeClass('disabled');
   }
   else {
@@ -117,22 +123,7 @@ updateTime(audioPos);
 
 
 
-/*
-* Code below sets up events to send messages to the playlist.
-*/
-// $container.on("click", ".btn-playlist-state-group", function() {
-//   //reset these for now.
-//   $('.btn-fade-state-group').addClass('hidden');
-//   $('.btn-select-state-group').addClass('hidden');
 
-//   if ($('.btn-select').hasClass('active')) {
-//     $('.btn-select-state-group').removeClass('hidden');
-//   }
-
-//   if ($('.btn-fadein').hasClass('active') || $('.btn-fadeout').hasClass('active')) {
-//     $('.btn-fade-state-group').removeClass('hidden');
-//   }
-// });
 
 $container.on("click", ".btn-annotations-download", function() {
   ee.emit("annotationsrequest");
@@ -173,27 +164,39 @@ $container.on("click", ".btn-clear", function() {
 });
 
 $container.on("click", ".btn-record", function() {
-  
   ee.emit("record");
 });
 
 //track interaction states
 $container.on("click", ".btn-cursor", function() {
+  hideSidebar();
+  var activeMode = "cursor"; // possible cursor, select, shift
+  $("#message").html(messages['cursor']);
+  $(".btn-cursor").hide();
+  $('.btn-shift').removeClass('active');
+  $(".btn-trim-audio").hide();
+  $('.btn-select').removeClass('active');
   ee.emit("statechange", "cursor");
   toggleActive(this);
 });
 
 $container.on("click", ".btn-select", function() {
+  _LTracker.push('select btn pressed');
   hideSidebar();
+  var activeMode = "select"; // possible cursor, select, shift
+  $(".btn-cursor").css('display', 'inline-block');
+  $('.btn-cursor').removeClass('active');
+  $("#message").html(messages['select']);
   ee.emit("statechange", "select");
   toggleActive(this);
 });
-
 $container.on("click", ".btn-shift", function() {
   hideSidebar();
+  var activeMode = "shift"; // possible cursor, select, shift
+  $(".btn-cursor").css('display', 'inline-block');
+  $("#message").html(messages['shift']);
   ee.emit("statechange", "shift");
   toggleActive(this);
-
 });
 
 function selectFile(e) {
@@ -277,7 +280,8 @@ $container.on("click", ".btn-fullscreen", function () {
         else {
           // document.getElementById("startscreen").remove();
           $('#startmodal').modal('hide');
-          if (screen.orientation.type != "landscape-primary") {
+          $("#message").html(messages['help']);
+          if (screen.orientation.type != ("landscape-primary" || "landscape-secondary")) {
             $('#screenorientation_modal').modal('show')
           }
           else{
@@ -295,8 +299,7 @@ $container.on("click", ".btn-fullscreen", function () {
 
 window.addEventListener("orientationchange", function() {
   // Announce the new orientation number
-  if (screen.orientation.type != "landscape-primary") {
-    console.log("false");
+  if (screen.orientation.type != ("landscape-primary" || "landscape-secondary")) {
     $('#screenorientation_modal').modal('show')
   }
   else{
@@ -388,13 +391,16 @@ function displayDownloadLink(link) {
   var dateString = (new Date()).toISOString();
   var $link = $("<a/>", {
     'href': link,
-    'download': 'waveformplaylist' + dateString + '.wav',
-    'text': 'Download mix ' + dateString,
-    'class': 'btn btn-small btn-download-link'
+    'download': 'track' + dateString + '.wav',
+    // 'text': 'Download ',
+    'class': 'fa fa-download fa-2x btn btn-primary btn-lg btn-download-link'
   });
+  hideSidebar();
+  $('#downloadModal').modal('show');
 
   $('.btn-download-link').remove();
-  $('.btn-download').after($link);
+  // $('.btn-download').after($link);
+  $('#modal-body-download').after($link);
 }
 
 

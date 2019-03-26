@@ -49,26 +49,8 @@ playlist = WaveformPlaylist.init({
 
 playlist.load([
   {
-    "src": "./media/audio/audio1.mp3",
-    "name": "Synth1",
-    "fadeIn": {
-      "duration": 0.5
-    },
-    "fadeOut": {
-      "duration": 0.5
-    },
-    "customClass": "vocals",
-    "waveOutlineColor": '#c0dce0'
-  },
-  {
-    "src": "./media/audio/audio2.mp3",
-    "name": "Synth2",
-    "fadeIn": {
-      "duration": 0.5
-    },
-    "fadeOut": {
-      "duration": 0.5
-    },
+    "src": "./media/audio/beat01.mp3",
+    "name": "Beat",
     "customClass": "vocals",
     "waveOutlineColor": '#c0dce0'
   }
@@ -84,7 +66,7 @@ playlist.load([
 
 // var playlist = WaveformPlaylist.init({
 //   samplesPerPixel: 3000,
-//   waveHeight: 100,
+//   waveHeight: 100, 
 //   container: document.getElementById("playlist"),
 //   state: 'cursor',
 //   colors: {
