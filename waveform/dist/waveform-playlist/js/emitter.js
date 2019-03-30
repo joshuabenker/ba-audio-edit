@@ -44,7 +44,12 @@ $container.on("change", ".automatic-scroll", function(e){
   ee.emit("automaticscroll", $(e.target).is(':checked'));
 });
 
-
+function drawSidebar(){
+  var rightSidebarjs = new SidebarJS.SidebarElement({
+    component: document.querySelector('[sidebarjs="rightsidebar"]'),
+    position: 'right'
+  });
+}
 
 function hideSidebar(){
   var element = document.getElementById("sidebarContainer");
@@ -281,6 +286,7 @@ $container.on("click", ".btn-fullscreen", function () {
           // document.getElementById("startscreen").remove();
           $('#startmodal').modal('hide');
           $("#message").html(messages['help']);
+          drawSidebar();
           if (screen.orientation.type != ("landscape-primary" || "landscape-secondary")) {
             $('#screenorientation_modal').modal('show')
           }
